@@ -13,7 +13,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;300;400;500;600&family=Syncopate:wght@700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
-    
+    // Name this 'db' so it doesn't conflict with the library!
     const db = window.supabase.createClient(
         'https://dqdkgqlmqbsidoxorhlb.supabase.co', 
         'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRxZGtncWxtcWJzaWRveG9yaGxiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk3NTU3ODEsImV4cCI6MjA5NTMzMTc4MX0.phukbt-rXgTii8wbjafLaxlsLIyj__9kOFEOyh9i5bY'
@@ -982,7 +982,7 @@ window.addEventListener('DOMContentLoaded', () => {
         requestAnimationFrame(stepConfettiSimulationFrame);
 
         // ─── SINGLE JS REALISTIC PIGEON ENGINE ───
-        const pigeonImage = 'https://res.cloudinary.com/dbwbncxmh/image/upload/v1779785176/pigeon.png';
+        const pigeonImage = 'pigeon.png';
         
         function launchRealisticPigeons(startX, startY) {
             const wingSound = document.getElementById('wingSound');
@@ -1083,7 +1083,7 @@ function triggerButtonLike(event, photoId) {
         counter.innerText = localLikesData[photoId];
     }
 
-    // 6. Trigger cinematic animations
+    // 6. Trigger your cinematic animations
     if (event && typeof triggerConfettiBurst === "function") {
         triggerConfettiBurst(event.clientX, event.clientY);
     }
@@ -1093,8 +1093,9 @@ function triggerButtonLike(event, photoId) {
 }
 
 // ─── OPTIONAL: DOUBLE TAP LIKE SUPPORT ───
+// ─── OPTIONAL: DOUBLE TAP LIKE SUPPORT ───
 function triggerDoubleTapLike(element, photoId) {
-   
+    // 👇 Change this line to call your NEW global function instead of the old one
     triggerGlobalLike(null, photoId);
     
     // Trigger your heart flash animation on the card
@@ -1111,10 +1112,11 @@ function triggerDoubleTapLike(element, photoId) {
 
 // ─── SLEEK ALERT REPLACEMENT ───
 function showLikeLimitAlert() {
- 
+    // Instead of a cheap browser alert, this prints a clean message to the console
+    // Or you can use a custom toast banner if you want to expand it later.
     console.log("SESSION ACCREDITATION LIMIT REACHED - 10 LIKES MAX PER VISIT");
     
-    
+    // Fallback standard alert so you know it works during offline testing:
     alert("You've reached your appreciation limit of 10 likes for this session!");
 }
         // ──────────────────────────────────────────https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_0040.jpg
@@ -1856,7 +1858,7 @@ async function refreshCardComment(photoId) {
             if (event.key === 'Enter') validateVaultAccess();
         });
 
-        // BUILT POINTER ENGINE ANIMATIONS
+        // REBUILT POINTER ENGINE ANIMATIONS
         const lens = document.getElementById('custom-lens');
         document.addEventListener('mousemove', (e) => {
             lens.style.left = `${e.clientX}px`;
@@ -1934,7 +1936,7 @@ async function refreshCardComment(photoId) {
     footer.style.opacity = '0';
     footer.style.visibility = 'hidden';
     
-   //Completely remove it from the layout after the fade
+    // Optional: Completely remove it from the layout after the fade
     setTimeout(() => {
         footer.style.display = 'none';
     }, 800);
@@ -1968,7 +1970,7 @@ async function triggerGlobalLike(event, photoId) {
         launchRealisticPigeons(event.clientX, event.clientY);
     }
 
-    
+    // Notice we use db.rpc here!
     const { data, error } = await db.rpc('increment_likes', { target_photo_id: photoId.toString() });
 
     if (error) {
@@ -1978,7 +1980,7 @@ async function triggerGlobalLike(event, photoId) {
 }
 
 async function safeFallbackLikeUpdate(photoId) {
-    
+    // Notice we use db.from here!
     const { data: currentData } = await db
         .from('photo_interactions')
         .select('likes_count')
@@ -1987,7 +1989,7 @@ async function safeFallbackLikeUpdate(photoId) {
         
     let trueCount = (currentData ? currentData.likes_count : 0) + 1;
 
-    
+    // Notice we use db.from here!
     await db
         .from('photo_interactions')
         .upsert({ photo_id: photoId.toString(), likes_count: trueCount }, { onConflict: 'photo_id' });
@@ -2012,7 +2014,7 @@ async function loadGlobalStats() {
         });
     }
 
-   
+    // Notice we use db.from here!
     const { data: commentData, error: cError } = await db.from('comments').select('photo_id');
     
     if (commentData) {
@@ -2038,7 +2040,7 @@ async function loadAndOpenComments(photoId) {
     
     toggleCommentsDrawer(true);
 
-    
+    // Notice we use db.from here!
     const { data, error } = await db
         .from('comments')
         .select('username, text, created_at')
@@ -2065,7 +2067,7 @@ async function loadAndOpenComments(photoId) {
     }
 }
 
-
+// Ensure the HTML finishes drawing before asking Supabase for numbers
 window.addEventListener('DOMContentLoaded', () => {
     setTimeout(loadGlobalStats, 500); 
 });
@@ -2091,7 +2093,7 @@ window.addEventListener('DOMContentLoaded', () => {
         transition: opacity 0.6s ease, visibility 0.6s ease;
     }
 
-    /*  modal fades in */
+    /* When this class is added, the modal fades in */
     .end-modal-overlay.show-modal {
         opacity: 1;
         visibility: visible;
