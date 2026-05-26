@@ -853,17 +853,37 @@
         </div>
     </div>
 
-    <div id="floating-controller" class="fixed bottom-6 right-6 z-40 bg-neutral-950/90 border border-neutral-900/80 backdrop-blur-md px-4 py-3 rounded-sm flex items-center gap-4 shadow-xl select-none hidden">
-        <div class="flex flex-col">
-            <span class="text-[9px] text-neutral-500 font-mono uppercase tracking-widest flex items-center gap-1">
-                <span id="sound-wave-dot" class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-ping"></span> Now Playing
-            </span>
-            <span id="persistent-track-status" class="text-[11px] text-neutral-300 font-mono tracking-wide truncate max-w-[130px]">No Track Loaded</span>
+    <div id="floating-controller" class="fixed bottom-6 right-6 z-40 bg-neutral-950/90 border border-neutral-900/80 backdrop-blur-md px-4 py-3 rounded-sm flex flex-col gap-3 shadow-xl select-none hidden min-w-[260px]">
+        <!-- Top Row: Text & Controls -->
+        <div class="flex items-center justify-between gap-4">
+            <div class="flex flex-col">
+                <span class="text-[9px] text-neutral-500 font-mono uppercase tracking-widest flex items-center gap-1">
+                    <span id="sound-wave-dot" class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-ping"></span> Now Playing
+                </span>
+                <span id="persistent-track-status" class="text-[11px] text-neutral-300 font-mono tracking-wide truncate max-w-[130px]">No Track Loaded</span>
+            </div>
+            
+            <!-- Player Controls (Prev, Play/Pause, Next) -->
+            <div class="flex items-center gap-1">
+                <button onclick="playPrevTrack()" class="w-7 h-7 rounded-full hover:bg-white/10 text-neutral-400 hover:text-white flex justify-center items-center smooth-glow cursor-pointer">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 fill-current" viewBox="0 0 24 24"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg>
+                </button>
+                <button onclick="toggleAudioPlayback()" class="w-8 h-8 rounded-full bg-white/10 hover:bg-white text-white hover:text-black flex justify-center items-center smooth-glow cursor-pointer">
+                    <svg id="p-play" xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 fill-current ml-0.5" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                    <svg id="p-pause" xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 fill-current hidden" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+                </button>
+                <button onclick="playNextTrack()" class="w-7 h-7 rounded-full hover:bg-white/10 text-neutral-400 hover:text-white flex justify-center items-center smooth-glow cursor-pointer">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 fill-current" viewBox="0 0 24 24"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg>
+                </button>
+            </div>
         </div>
-        <button onclick="toggleAudioPlayback()" class="w-8 h-8 rounded-full bg-white/10 hover:bg-white text-white hover:text-black flex justify-center items-center smooth-glow cursor-pointer">
-            <svg id="p-play" xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 fill-current ml-0.5" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-            <svg id="p-pause" xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 fill-current hidden" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
-        </button>
+        
+        <!-- Bottom Row: Progress Slider & Timestamps -->
+        <div class="flex items-center gap-2">
+            <span id="track-time-current" class="text-[8px] font-mono text-neutral-500 w-7 text-right">0:00</span>
+            <input type="range" id="track-progress-slider" min="0" max="100" value="0" class="w-full h-1 bg-neutral-800 rounded-lg appearance-none cursor-pointer accent-amber-400 outline-none">
+            <span id="track-time-duration" class="text-[8px] font-mono text-neutral-500 w-7">0:00</span>
+        </div>
     </div>
 
     <footer class="max-w-7xl w-full mx-auto text-center pt-16 text-[10px] tracking-[0.25em] uppercase border-t border-neutral-900/60" style="color: var(--text-muted); border-color: var(--border-color);">
@@ -1759,6 +1779,66 @@ async function refreshCardComment(photoId) {
             if (audioNode.paused) { audioNode.play(); iconPlay.classList.add('hidden'); iconPause.classList.remove('hidden'); liveWaveDot.classList.remove('hidden'); }
             else { audioNode.pause(); iconPlay.classList.remove('hidden'); iconPause.classList.add('hidden'); liveWaveDot.classList.add('hidden'); }
         }
+        // Auto-play next track when the current one ends
+// 1. Next Track Logic
+        function playNextTrack() {
+            if (activeTrackId === null) return;
+            let currentIndex = myPlaylist.findIndex(t => t.id === activeTrackId);
+            let nextIndex = currentIndex + 1;
+            
+            if (nextIndex >= myPlaylist.length) nextIndex = 0; // Loop to start
+            
+            activeTrackId = myPlaylist[nextIndex].id;
+            runAudioSourceTrack(activeTrackId);
+        }
+
+        // 2. Previous Track Logic
+        function playPrevTrack() {
+            if (activeTrackId === null) return;
+            let currentIndex = myPlaylist.findIndex(t => t.id === activeTrackId);
+            let prevIndex = currentIndex - 1;
+            
+            if (prevIndex < 0) prevIndex = myPlaylist.length - 1; // Loop to end
+            
+            activeTrackId = myPlaylist[prevIndex].id;
+            runAudioSourceTrack(activeTrackId);
+        }
+
+        // 3. Auto-play next track when current ends (Cleaned up!)
+        audioNode.addEventListener('ended', playNextTrack);
+
+        // 4. Progress Slider Variables & Logic
+        const trackProgressBar = document.getElementById('track-progress-slider');
+        const currentTimeDisplay = document.getElementById('track-time-current');
+        const durationDisplay = document.getElementById('track-time-duration');
+
+        // Helper to format seconds into M:SS
+        function formatTime(seconds) {
+            if (isNaN(seconds)) return "0:00";
+            const mins = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+        }
+
+        // Update the slider and timestamps as the song plays
+        audioNode.addEventListener('timeupdate', () => {
+            if (!audioNode.duration) return;
+            
+            // Calculate percentage for the slider
+            const progressPercent = (audioNode.currentTime / audioNode.duration) * 100;
+            trackProgressBar.value = progressPercent;
+            
+            // Update text displays
+            currentTimeDisplay.innerText = formatTime(audioNode.currentTime);
+            durationDisplay.innerText = formatTime(audioNode.duration);
+        });
+
+        // Allow user to seek through the song by dragging the slider
+        trackProgressBar.addEventListener('input', (e) => {
+            if (!audioNode.duration) return;
+            const seekTime = (e.target.value / 100) * audioNode.duration;
+            audioNode.currentTime = seekTime;
+        });
 
         // ─── SPECIAL TAB LOGIC ENGINE ───
         const MILESTONE_START_DATE = new Date(2024, 11, 2, 0, 0, 0);
