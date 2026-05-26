@@ -836,7 +836,7 @@
     </div>
 
     <!-- Audio Drawer & Controller Elements -->
-    <audio id="bg-audio" loop></audio>
+    <audio id="bg-audio"></audio>
     
     <!-- Pigeon Wing Sound Engine -->
     <audio id="wingSound" preload="auto">
@@ -1804,7 +1804,7 @@ async function refreshCardComment(photoId) {
             runAudioSourceTrack(activeTrackId);
         }
 
-        // 3. Auto-play next track when current ends (Cleaned up!)
+        // 3. Auto-play next track when current ends
         audioNode.addEventListener('ended', playNextTrack);
 
         // 4. Progress Slider Variables & Logic
@@ -1826,19 +1826,21 @@ async function refreshCardComment(photoId) {
             
             // Calculate percentage for the slider
             const progressPercent = (audioNode.currentTime / audioNode.duration) * 100;
-            trackProgressBar.value = progressPercent;
+            if (trackProgressBar) trackProgressBar.value = progressPercent;
             
             // Update text displays
-            currentTimeDisplay.innerText = formatTime(audioNode.currentTime);
-            durationDisplay.innerText = formatTime(audioNode.duration);
+            if (currentTimeDisplay) currentTimeDisplay.innerText = formatTime(audioNode.currentTime);
+            if (durationDisplay) durationDisplay.innerText = formatTime(audioNode.duration);
         });
 
         // Allow user to seek through the song by dragging the slider
-        trackProgressBar.addEventListener('input', (e) => {
-            if (!audioNode.duration) return;
-            const seekTime = (e.target.value / 100) * audioNode.duration;
-            audioNode.currentTime = seekTime;
-        });
+        if (trackProgressBar) {
+            trackProgressBar.addEventListener('input', (e) => {
+                if (!audioNode.duration) return;
+                const seekTime = (e.target.value / 100) * audioNode.duration;
+                audioNode.currentTime = seekTime;
+            });
+        }
 
         // ─── SPECIAL TAB LOGIC ENGINE ───
         const MILESTONE_START_DATE = new Date(2024, 11, 2, 0, 0, 0);
