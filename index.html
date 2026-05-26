@@ -1,0 +1,2186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SHIRSENDU // Creative Portfolio</title>
+    <!-- Tailwind CSS Play CDN Engine -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    
+    <!-- Google Typography CDN Link -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;300;400;500;600&family=Syncopate:wght@700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+    // Name this 'db' so it doesn't conflict with the library!
+    const db = window.supabase.createClient(
+        'https://dqdkgqlmqbsidoxorhlb.supabase.co', 
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRxZGtncWxtcWJzaWRveG9yaGxiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk3NTU3ODEsImV4cCI6MjA5NTMzMTc4MX0.phukbt-rXgTii8wbjafLaxlsLIyj__9kOFEOyh9i5bY'
+    );
+    </script>
+    
+    <style>
+        
+        /* Modern CSS Theme Properties */
+        :root {
+            --bg-color: #070708;
+            --card-bg: rgba(13, 13, 15, 0.4);
+            --border-color: #17171a;
+            --text-main: #f3f4f6;
+            --text-muted: #737373;
+            --text-accent: #fbbf24;
+        }
+
+        .light-theme {
+            --bg-color: #fafafa;
+            --card-bg: rgba(255, 255, 255, 0.8);
+            --border-color: #e5e5e5;
+            --text-main: #0a0a0a;
+            --text-muted: #888888;
+            --text-accent: #d97706;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            -webkit-font-smoothing: antialiased;
+            transition: background-color 0.5s cubic-bezier(0.16, 1, 0.3, 1), color 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @media (min-width: 1024px) {
+            body, button, a, input, div, img { cursor: none !important; }
+        }
+
+        /* ─── BULLETPROOF CURSOR LENS ENGINE ─── */
+        #custom-lens {
+            pointer-events: none;
+            transition: transform 0.15s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s, border-color 0.2s;
+            z-index: 2147483647 !important; /* Absolute browser maximum layer */
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        /* True CSS Masonry Engine */
+        .portfolio-masonry-grid {
+            column-count: 1;
+            column-gap: 2rem;
+        }
+        @media (min-width: 640px) { .portfolio-masonry-grid { column-count: 2; } }
+        @media (min-width: 1100px) { .portfolio-masonry-grid { column-count: 2; } }
+        
+        .masonry-card-item {
+            break-inside: avoid;
+            margin-bottom: 2rem;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+        }
+        .smooth-glow {
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal-on-scroll {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 1000ms cubic-bezier(0.16, 1, 0.3, 1), transform 1000ms cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: opacity, transform;
+        }
+        .reveal-on-scroll.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ─── REALISTIC PIGEON ANIMATION CLASSES ─── */
+        .pigeon {
+            position: fixed;
+            width: 120px;
+            pointer-events: none;
+            z-index: 9999;
+            will-change: transform, left, top, filter;
+            transform-origin: center center;
+        }
+
+        .pigeon img {
+            width: 100%;
+            height: auto;
+            display: block;
+            pointer-events: none;
+            user-select: none;
+            transform-origin: center center;
+            will-change: transform;
+        }
+
+        .feather {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.9);
+            pointer-events: none;
+            z-index: 9998;
+            filter: blur(2px);
+        }
+
+        .glow {
+            position: absolute;
+            inset: -18px;
+            background: radial-gradient(circle, rgba(255,255,255,0.4), transparent 70%);
+            z-index: -1;
+        }
+
+        /* ─── ABOUT ME SECTION CLASSES ─── */
+        @keyframes pageEntrance {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        
+        .split-about-container {
+            display: grid;
+            grid-template-columns: 1.41fr 1fr;
+            min-height: 100vh;
+            width: 100vw;
+            background: #08080c;
+            position: relative;
+            animation: pageEntrance 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            color: #ffffff;
+        }
+        
+        .left-gallery-column { position: relative; display: flex; justify-content: center; align-items: center; padding: 2vw; background: transparent; overflow: hidden; }
+        .glow-canvas-wrapper { position: absolute; width: 100vw; height: 100vh; top: 0; left: 0; z-index: 1; pointer-events: none; filter: blur(80px); opacity: 0.85; }
+        .orb-cyan { position: absolute; width: 360px; height: 360px; border-radius: 50%; background: #a5f3fc; top: 20%; left: 15%; opacity: 0.22; transition: all 1s cubic-bezier(0.16, 1, 0.3, 1); }
+        .orb-indigo { position: absolute; width: 400px; height: 400px; border-radius: 50%; background: #f1f5f9; bottom: 15%; right: 10%; opacity: 0.18; transition: all 1s cubic-bezier(0.16, 1, 0.3, 1); }
+        @keyframes pulseGlow { 0% { opacity: 0.1; transform: scale(1); } 50% { opacity: 0.25; transform: scale(1.15); } 100% { opacity: 0.1; transform: scale(1); } }
+        .orb-violet { position: absolute; width: 420px; height: 420px; border-radius: 50%; background: #ddd6fe; top: 30%; left: 35%; opacity: 0.15; animation: pulseGlow 9s ease-in-out infinite; }
+        
+        .hover-trigger-left:hover ~ .glow-canvas-wrapper .orb-cyan { transform: scale(1.4) translate(-30px, -10px); opacity: 0.45; background: #22d3ee; }
+        .hover-trigger-left:hover ~ .glow-canvas-wrapper .orb-indigo { opacity: 0.08; }
+        .hover-trigger-right:hover ~ .glow-canvas-wrapper .orb-indigo { transform: scale(1.4) translate(30px, 10px); opacity: 0.4; background: #ffffff; }
+        .hover-trigger-right:hover ~ .glow-canvas-wrapper .orb-cyan { opacity: 0.08; }
+        
+        .hover-trigger-left, .hover-trigger-right { position: absolute; top: 0; height: 100%; width: 50%; z-index: 25; cursor: pointer; }
+        .hover-trigger-left { left: 0; } .hover-trigger-right { right: 0; }
+        
+        .gallery-stage { position: relative; width: 100%; height: 60vh; max-height: 500px; display: flex; justify-content: center; align-items: center; pointer-events: none; z-index: 5; }
+        .art-frame { position: absolute; background: #09090d; border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 12px; overflow: hidden; box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6); transition: transform 0.95s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1); opacity: 0; width: 12vw; height: 16.5vw; max-width: 175px; max-height: 235px; }
+        .art-frame img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        
+        .center-sketch { width: 22vw; height: 29vw; max-width: 310px; max-height: 410px; left: 50%; transform: translateX(-50%); z-index: 20; border: 1px solid rgba(255, 255, 255, 0.08); box-shadow: 0 35px 80px rgba(0, 0, 0, 0.7); opacity: 1; pointer-events: auto; }
+        .center-sketch img { mix-blend-mode: lighten; opacity: 0.95; }
+        .pos-left-1, .pos-left-2, .pos-right-1, .pos-right-2 { left: 50%; transform: translateX(-50%) scale(0.85); }
+        
+        .hover-trigger-left:hover ~ .gallery-stage .center-sketch { transform: translateX(-50%) scale(1.08); }
+        .hover-trigger-left:hover ~ .gallery-stage .pos-left-1 { transform: translateX(calc(-50% - 24vw)) scale(1.08); opacity: 1; pointer-events: auto; }
+        .hover-trigger-left:hover ~ .gallery-stage .pos-left-2 { transform: translateX(calc(-50% - 13vw)) scale(1.08); opacity: 1; pointer-events: auto; }
+        .hover-trigger-right:hover ~ .gallery-stage .center-sketch { transform: translateX(-50%) scale(1.08); }
+        .hover-trigger-right:hover ~ .gallery-stage .pos-right-1 { transform: translateX(calc(-50% + 13vw)) scale(1.08); opacity: 1; pointer-events: auto; }
+        .hover-trigger-right:hover ~ .gallery-stage .pos-right-2 { transform: translateX(calc(-50% + 24vw)) scale(1.08); opacity: 1; pointer-events: auto; }
+        
+        .art-frame:not(.center-sketch):hover { border-color: rgba(255, 255, 255, 0.6) !important; z-index: 30 !important; }
+        .hover-trigger-left:hover ~ .gallery-stage .pos-left-1:hover { transform: translateX(calc(-50% - 24vw)) translateY(-15px) scale(1.12) !important; }
+        .hover-trigger-left:hover ~ .gallery-stage .pos-left-2:hover { transform: translateX(calc(-50% - 13vw)) translateY(-15px) scale(1.12) !important; }
+        .hover-trigger-right:hover ~ .gallery-stage .pos-right-1:hover { transform: translateX(calc(-50% + 13vw)) translateY(-15px) scale(1.12) !important; }
+        .hover-trigger-right:hover ~ .gallery-stage .pos-right-2:hover { transform: translateX(calc(-50% + 24vw)) translateY(-15px) scale(1.12) !important; }
+        
+        .right-text-column { display: flex; align-items: center; justify-content: center; padding: 40px; z-index: 5; background: transparent; }
+        @keyframes dynamicBorderMove { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        
+        .glass-glow-card { position: relative; width: 100%; max-width: 530px; background: rgba(18, 18, 24, 0.7); backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px); border-radius: 28px; padding: 5vw 4vw; overflow: hidden; box-shadow: 0 40px 100px rgba(0, 0, 0, 0.8), inset 0 1px 1px rgba(255, 255, 255, 0.05); }
+        .glass-glow-card::before { content: ""; position: absolute; inset: 0; border-radius: 28px; padding: 1.5px; background: linear-gradient(135deg, rgba(34, 211, 238, 0.35), rgba(139, 92, 246, 0.15), rgba(255, 255, 255, 0.15)); -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none; z-index: 2; }
+        .glass-glow-card-glow-element { position: absolute; width: 150%; height: 150%; top: -25%; left: -25%; background: conic-gradient(from 0deg, transparent, rgba(34, 211, 238, 0.25), rgba(139, 92, 246, 0.2), transparent); animation: dynamicBorderMove 10s linear infinite; filter: blur(25px); z-index: 1; pointer-events: none; opacity: 0.5; transition: opacity 0.5s ease; }
+        
+        .right-text-column:hover .glass-glow-card { box-shadow: 0 50px 110px rgba(0, 0, 0, 0.9), 0 0 50px rgba(34, 211, 238, 0.04); }
+        .right-text-column:hover .glass-glow-card-glow-element { opacity: 0.8; }
+        
+        .index-number { font-family: 'Syncopate', sans-serif; font-size: 0.65rem; color: #64748b; margin-bottom: 20px; letter-spacing: 6px; font-weight: 700; display: flex; align-items: center; gap: 10px; position: relative; z-index: 5; }
+        .index-number::after { content: ""; height: 1px; width: 30px; background: rgba(100, 116, 139, 0.3); display: inline-block; }
+        .main-header { font-family: 'Syncopate', sans-serif; font-size: 2.5rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; line-height: 1.1; margin-bottom: 45px; background: linear-gradient(180deg, #ffffff 0%, #cbd5e1 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; position: relative; z-index: 5; }
+        .narrative-p { font-size: 1.02rem; line-height: 1.9; font-weight: 300; color: #94a3b8; margin-bottom: 28px; letter-spacing: 0.2px; transition: color 0.3s ease; position: relative; z-index: 5; }
+        .glow-word { color: #ffffff; font-weight: 400; letter-spacing: 0.3px; border-bottom: 1px solid rgba(255, 255, 255, 0.08); padding-bottom: 2px; }
+        .glass-glow-card:hover .narrative-p { color: #cbd5e1; }
+        .narrative-p:hover { color: #ffffff !important; }
+        
+        @media (max-width: 1024px) {
+            .split-about-container { grid-template-columns: 1fr; padding: 40px 16px; gap: 50px; height: auto; width: 100%; }
+            .left-gallery-column { padding: 20px 0; display: block; order: 1; }
+            .glow-canvas-wrapper, .hover-trigger-left, .hover-trigger-right { display: none; }
+            .gallery-stage { display: flex; flex-direction: column; align-items: center; height: auto; max-height: none; gap: 20px; pointer-events: auto; }
+            .art-frame { position: relative !important; transform: none !important; opacity: 1 !important; width: 85vw !important; height: 60vw !important; max-width: 400px; max-height: 280px; box-shadow: 0 15px 35px rgba(0,0,0,0.6); left: auto !important; }
+            .center-sketch { width: 70vw !important; height: 92vw !important; max-width: 280px; max-height: 370px; order: -1; margin-bottom: 15px; }
+            .right-text-column { padding: 10px 0; order: 2; }
+            .glass-glow-card { padding: 40px 24px; border-radius: 24px; background: rgba(13, 13, 16, 0.95); }
+        }
+
+        /* ─── SPECIAL TAB / VAULT SECTION CLASSES ─── */
+        .vault-gate-wrapper {
+            position: fixed;
+            inset: 0;
+            width: 100vw;
+            height: 100vh;
+            background: #08080c;
+            z-index: 50; /* Reduced to sit properly below the cursor */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), visibility 1s;
+        }
+
+        .gate-card {
+            background: rgba(18, 18, 24, 0.75);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border-radius: 24px;
+            padding: 50px 40px;
+            width: 100%;
+            max-width: 440px;
+            text-align: center;
+            box-shadow: 0 40px 90px rgba(0,0,0,0.8);
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            position: relative;
+        }
+
+        .gate-title {
+            font-family: 'Syncopate', sans-serif;
+            font-size: 0.9rem;
+            letter-spacing: 5px;
+            color: #cbd5e1;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+        }
+
+        .pass-input-field {
+            width: 100%;
+            background: #030305;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 16px 20px;
+            color: #ffffff;
+            font-size: 1.1rem;
+            letter-spacing: 8px;
+            text-align: center;
+            outline: none;
+            font-family: monospace;
+            transition: all 0.4s ease;
+            margin-bottom: 20px;
+        }
+
+        .unlock-btn {
+            background: #ffffff;
+            color: #030305;
+            border: none;
+            width: 100%;
+            padding: 16px;
+            border-radius: 12px;
+            font-family: 'Syncopate', sans-serif;
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .unlock-btn:hover {
+            background: #22d3ee;
+            box-shadow: 0 0 25px rgba(34, 211, 238, 0.3);
+        }
+
+        .error-hint {
+            color: #ef4444;
+            font-size: 0.85rem;
+            margin-top: 12px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .welcome-overlay {
+            position: fixed;
+            inset: 0;
+            width: 100vw;
+            height: 100vh;
+            background: #08080c;
+            z-index: 40; /* Lowered properly */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            padding: 40px;
+            text-align: center;
+        }
+
+        .welcome-msg-line1 {
+            font-family: 'Syncopate', sans-serif;
+            font-size: 2.2rem;
+            font-weight: 700;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            background: linear-gradient(180deg, #ffffff 0%, #cbd5e1 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .welcome-msg-line2 {
+            font-size: 1.1rem;
+            font-weight: 300;
+            color: #94a3b8;
+            letter-spacing: 0.5px;
+            max-width: 600px;
+            line-height: 1.8;
+            margin-bottom: 30px;
+        }
+
+        .special-highlight {
+            color: #22d3ee;
+            font-weight: 400;
+            border-bottom: 1px solid rgba(34, 211, 238, 0.2);
+            padding-bottom: 2px;
+        }
+
+        .statement-heart-sign {
+            display: inline-block;
+            font-size: 2.5rem;
+            color: #ef4444;
+            filter: drop-shadow(0 0 15px rgba(239, 68, 68, 0.6));
+            animation: textHeartPulse 1.2s ease-in-out infinite;
+        }
+
+        @keyframes textHeartPulse {
+            0%, 70%, 100% { transform: scale(1); }
+            14%, 42% { transform: scale(1.12); }
+        }
+
+        .timer-heart-wrapper {
+            position: fixed; 
+            z-index: 30; /* Lowered properly */
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            opacity: 0;
+            visibility: hidden;
+            transition: transform 1.6s cubic-bezier(0.76, 0, 0.24, 1),
+                        opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+                        visibility 0.8s ease;
+        }
+
+        @keyframes masterHeartbeat {
+            0%, 70%, 100% { transform: scale(1); filter: drop-shadow(0 0 25px rgba(239, 68, 68, 0.45)); }
+            14%, 42% { transform: scale(1.06); filter: drop-shadow(0 0 45px rgba(239, 68, 68, 0.85)); }
+        }
+
+        .beating-timer-heart-node {
+            position: relative;
+            width: 420px;
+            height: 380px;
+            padding: 40px; 
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            animation: masterHeartbeat 1s infinite cubic-bezier(0.215, 0.610, 0.355, 1);
+        }
+
+        .heart-svg-backdrop {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            fill: rgba(239, 68, 68, 0.12);
+            stroke: rgba(239, 68, 68, 0.85);
+            stroke-width: 1.5;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            z-index: 1;
+        }
+
+        .heart-counter-content-box {
+            position: relative;
+            z-index: 5;
+            text-align: center;
+            padding-bottom: 20px; 
+        }
+
+        .heart-counter-header-tag {
+            font-family: 'Syncopate', sans-serif;
+            font-size: 0.55rem;
+            letter-spacing: 3px;
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 12px;
+            text-transform: uppercase;
+        }
+
+        .live-countdown-digits-row {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .countdown-segment-unit {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 55px;
+        }
+
+        .countdown-numerical-value {
+            font-size: 1.6rem;
+            font-weight: 500;
+            font-family: monospace;
+            color: #ffffff;
+            line-height: 1;
+            text-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .countdown-label-string {
+            font-size: 0.55rem;
+            color: rgba(255, 255, 255, 0.4);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 4px;
+        }
+
+        .timer-heart-wrapper.center-stage {
+            opacity: 1;
+            visibility: visible;
+            transform: translate(0, 0) scale(1);
+        }
+
+        .timer-heart-wrapper.corner-docked {
+            opacity: 1;
+            visibility: visible;
+            transform: translate(calc(50vw - 190px), calc(-50vh + 165px)) scale(0.55);
+            pointer-events: auto;
+        }
+
+        .vault-main-content {
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 1.8s cubic-bezier(0.34, 1.56, 0.64, 1); 
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 160px 40px 80px 40px; 
+        }
+
+        .vault-section-header {
+            margin-bottom: 60px;
+            text-align: left;
+            max-width: 60%;
+        }
+
+        .vault-section-header h3 {
+            font-family: 'Syncopate', sans-serif;
+            font-size: 1.3rem;
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            background: linear-gradient(90deg, #ffffff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .photo-fluid-matrix {
+            column-count: 3;
+            column-gap: 30px;
+            width: 100%;
+        }
+
+        .vault-photo-card {
+            break-inside: avoid;
+            background: #111116;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            border-radius: 16px;
+            margin-bottom: 30px;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            position: relative;
+            cursor: pointer;
+            opacity: 0;
+            transform: translateY(40px);
+            transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1), 
+                        opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+                        border-color 0.4s ease;
+        }
+
+        .vault-photo-card img {
+            width: 100%;
+            height: auto;
+            display: block;
+            object-fit: cover;
+            transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .vault-photo-card:hover { border-color: rgba(34, 211, 238, 0.3); }
+        .vault-photo-card:hover img { transform: scale(1.06); }
+        .vault-photo-card.stagger-entrance { opacity: 1; transform: translateY(0); }
+
+        @media (max-width: 1024px) {
+            .photo-fluid-matrix { column-count: 2; column-gap: 20px; }
+            .timer-heart-wrapper.corner-docked { transform: translate(calc(50vw - 150px), calc(-50vh + 120px)) scale(0.45); }
+        }
+        @media (max-width: 768px) {
+            .timer-heart-wrapper.corner-docked { position: relative !important; width: 100% !important; height: auto !important; top: auto !important; left: auto !important; transform: none !important; margin: 0 auto 40px auto; scale: 0.85; }
+            .vault-section-header { max-width: 100%; text-align: center; }
+            .vault-main-content { padding: 40px 20px; }
+            .photo-fluid-matrix { column-count: 1; }
+        }
+        /* ─── MODERN GREETING ANIMATION ─── */
+/* ─── LUXURY CINEMATIC REVEAL ─── */
+.text-line {
+    opacity: 0;
+    transform: scale(0.9);
+    letter-spacing: -0.1em; /* Starts tight */
+    transition: all 1.2s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.text-line.visible {
+    opacity: 1;
+    transform: scale(1);
+    letter-spacing: 0.2em; /* Expands as it appears */
+}
+
+.welcome-glow-text {
+    background: linear-gradient(90deg, #fff, #fbbf24, #fff);
+    background-size: 200% 100%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shimmer 3s linear infinite;
+    display: inline-block;
+}
+@keyframes shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+    
+}
+
+  
+
+
+.eager-btn {
+    background: transparent;
+    border: 1px solid var(--text-accent);
+    color: var(--text-accent);
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Syncopate', sans-serif;
+    font-size: 0.7rem;
+}
+
+.eager-btn:hover {
+    background: var(--text-accent);
+    color: var(--bg-color);
+}
+
+/* Responsive adjustment */
+@media (max-width: 768px) {
+    .footer-container { flex-direction: column; text-align: center; }
+}
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between p-6 md:p-12 lg:p-16 relative overflow-x-hidden">
+<div id="welcome-gate" class="fixed inset-0 z-[3000000] bg-[#08080c] flex justify-center items-center transition-opacity duration-1000">
+    <div class="bg-neutral-900/50 backdrop-blur-2xl border border-white/5 p-10 rounded-2xl text-center max-w-sm w-full shadow-2xl">
+        <h2 class="text-white font-['Syncopate'] text-sm tracking-[0.3em] uppercase mb-8">Enter your name</h2>
+        <input type="text" id="userNameInput" placeholder="NAME" class="w-full bg-black border border-white/10 rounded-lg p-4 text-white text-center font-mono tracking-[0.2em] outline-none focus:border-amber-500 mb-6 uppercase">
+        <button onclick="saveUsername()" class="w-full py-4 bg-white text-black font-['Syncopate'] text-xs tracking-widest uppercase hover:bg-amber-400 transition cursor-pointer">Enter</button>
+    </div>
+</div>
+
+<div id="welcome-overlay" class="fixed inset-0 z-[2000000] bg-[#08080c] flex flex-col justify-center items-center opacity-0 hidden transition-opacity duration-1000">
+    <h1 id="welcomeText" class="text-white font-['Syncopate'] text-xl tracking-[0.2em] uppercase text-center px-6 leading-relaxed"></h1>
+</div>
+
+    <!-- GLOBAL CANVAS FIELD FOR LIKE BUTTON CONFETTI EXPLOSIONS -->
+   <canvas id="confettiEffectCanvas" class="fixed inset-0 pointer-events-none z-[99999] w-full h-full"></canvas>
+
+    <!-- CUSTOM CURSOR LENS ELEMENT -->
+    <div id="custom-lens" class="hidden lg:flex fixed top-0 left-0 w-3 h-3 rounded-full border border-amber-400 items-center justify-center font-mono text-[6px] tracking-[0.05em] text-black font-semibold uppercase leading-none"></div>
+
+    <!-- Header Block -->
+    <header class="max-w-7xl w-full mx-auto flex flex-col sm:flex-row justify-between items-start sm:items-baseline mb-20 gap-6">
+        <div>
+            <h1 class="text-3xl font-light tracking-[0.25em] uppercase" style="color: var(--text-main);">SHIRSENDU's</h1>
+            <p class="text-[10px] font-mono tracking-[0.18em] uppercase mt-2" style="color: var(--text-accent);">DIGITAL PHOTOGRAPHY ALBUM</p>
+            <p id="viewingAsTag" class="text-[9px] font-mono tracking-widest text-white/50 uppercase mt-1"></p>
+        </div>
+        <nav class="flex flex-wrap items-center gap-8 text-xs tracking-[0.2em] uppercase font-medium" style="color: var(--text-muted);">
+            <a href="#" class="text-white border-b pb-1 smooth-glow" style="color: var(--text-main); border-color: var(--text-main);">Portfolio</a>
+            <button onclick="toggleMusicDrawer(true)" class="hover:text-white smooth-glow uppercase flex items-center gap-1.5 cursor-pointer" style="color: var(--text-muted);">Music</button>
+            <button onclick="toggleSpecialTabModal(true)" class="hover:text-white smooth-glow uppercase cursor-pointer" style="color: var(--text-muted);">Special Tab</button>
+            <button onclick="toggleAboutModal(true)" class="hover:text-white smooth-glow uppercase cursor-pointer" style="color: var(--text-muted);">About</button>
+            <button onclick="toggleGamesModal(true)" class="hover:text-white smooth-glow uppercase cursor-pointer" style="color: var(--text-muted);">Games</button>
+            <button onclick="toggleGalleryTheme()" class="smooth-glow uppercase text-[10px] font-mono border px-2 py-1 rounded-sm flex items-center gap-1.5 cursor-pointer" style="border-color: var(--border-color); color: var(--text-main);">
+                <span id="theme-dot" class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
+                <span id="theme-text">Darkroom</span>
+            </button>
+        </nav>
+    </header>
+
+    <!-- Main Visual Works Space -->
+    <main class="max-w-7xl w-full mx-auto flex-grow mb-12">
+        <div id="dynamic-masonry-grid" class="portfolio-masonry-grid"></div>
+    </main>
+
+    <!-- Focus Lightbox Layer -->
+    <div id="focus-overlay" onclick="dismissFocusedView()" class="fixed inset-0 bg-black/92 backdrop-blur-md hidden flex-col justify-center items-center z-50 p-4 transition-opacity duration-300 opacity-0 cursor-zoom-out">
+        <span class="absolute top-6 right-8 text-neutral-500 font-mono text-[10px] uppercase tracking-widest pointer-events-none">Click background to dismiss</span>
+        <div class="flex flex-col items-center gap-4 max-w-full" onclick="event.stopPropagation()">
+            <img id="focused-image-frame" class="max-h-[75vh] max-w-full object-contain rounded shadow-[0_0_60px_rgba(0,0,0,0.9)] scale-95 transition-transform duration-300 ease-out" src="" alt="Focused active view">
+            <div id="exif-overlay-strip" class="text-center font-mono text-[10px] tracking-[0.2em] text-neutral-400 uppercase bg-neutral-950/80 border border-neutral-900 px-4 py-2 rounded-sm backdrop-blur-sm opacity-0 transition-opacity duration-500 delay-100"></div>
+        </div>
+    </div>
+
+    <!-- FULL-SCREEN SPECIAL TAB OVERLAY MODAL -->
+    <div id="special-tab-overlay" class="fixed inset-0 bg-[#08080c] hidden flex-col z-[100] transition-opacity duration-300 opacity-0 overflow-y-auto font-['Plus_Jakarta_Sans',sans-serif]">
+        <button onclick="toggleSpecialTabModal(false)" class="fixed top-6 right-8 z-[1001] text-white hover:text-amber-400 font-mono text-xs uppercase tracking-widest cursor-pointer smooth-glow">
+            &times; Close
+        </button>
+
+        <!-- 🔒 VAULT ACCESS ENTRY SENSOR PROMPT -->
+        <div class="vault-gate-wrapper" id="vaultGate">
+            <div class="gate-card">
+                <h4 class="gate-title">Enter Vault Passcode</h4>
+                <input type="password" class="pass-input-field" id="vaultPass" placeholder="••••" maxlength="8">
+                <button class="unlock-btn" onclick="validateVaultAccess()">Unlock Vault</button>
+                <div class="error-hint" id="errorHint">Incorrect Token Key Configuration</div>
+            </div>
+        </div>
+
+        <!-- ✨ TEXT WELCOME OVERLAY DISPLAY LAYER -->
+        <div class="welcome-overlay" id="welcomeOverlay">
+            <h2 class="welcome-msg-line1">Welcome to this tab</h2>
+            <p class="welcome-msg-line2">If you know the password, you are already <span class="special-highlight">special</span>.</p>
+            <div class="statement-heart-sign">❤️</div>
+        </div>
+
+        <!-- 🌟 THE ANIMATED TIMER HEART HUB WRAPPER -->
+        <div class="timer-heart-wrapper" id="timerHeart">
+            <div class="beating-timer-heart-node">
+                <svg class="heart-svg-backdrop" viewBox="-2 -2 36 34">
+                    <path d="M23.6,0.5c-3.4,0-6.3,2.7-7.6,5.6C14.7,3.2,11.8,0.5,8.4,0.5C3.8,0.5,0,4.3,0,8.9c0,9.4,9.5,11.9,16,21.2
+                    c6.1-9.3,16-12.1,16-21.2C32,4.3,28.2,0.5,23.6,0.5z"/>
+                </svg>
+
+                <div class="heart-counter-content-box">
+                    <div class="heart-counter-header-tag">Togetherness Meter</div>
+                    <div class="live-countdown-digits-row">
+                        <div class="countdown-segment-unit"><span class="countdown-numerical-value" id="countDays">00</span><span class="countdown-label-string">Days</span></div>
+                        <div class="countdown-segment-unit"><span class="countdown-numerical-value" id="countHours">00</span><span class="countdown-label-string">Hrs</span></div>
+                        <div class="countdown-segment-unit"><span class="countdown-numerical-value" id="countMins">00</span><span class="countdown-label-string">Mins</span></div>
+                        <div class="countdown-segment-unit"><span class="countdown-numerical-value" id="countSecs">00</span><span class="countdown-label-string">Secs</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 🎨 STYLISH MASONRY SHOWCASE ENVIRONMENT -->
+        <div class="vault-main-content" id="vaultContent">
+            <div class="vault-section-header">
+                <h3>❤️ MEMORIES ❤️</h3>
+            </div>
+
+            <div class="photo-fluid-matrix">
+                <div class="vault-photo-card"><img src="https://res.cloudinary.com/dbwbncxmh/image/upload/v1779689141/1778487264548.png" alt="Clip 01"></div>
+                <div class="vault-photo-card"><img src="https://res.cloudinary.com/dbwbncxmh/image/upload/v1779689139/IMG20260410105044.jpg" alt="Clip 02"></div>
+                <div class="vault-photo-card"><img src="https://res.cloudinary.com/dbwbncxmh/image/upload/v1779689137/1778488516528.png" alt="Clip 03"></div>
+                <div class="vault-photo-card"><img src="https://res.cloudinary.com/dbwbncxmh/image/upload/v1779689141/1778488254519.png" alt="Clip 04"></div>
+                <div class="vault-photo-card"><img src="https://res.cloudinary.com/dbwbncxmh/image/upload/v1779689143/IMG20260410154412.jpg" alt="Clip 05"></div>
+                <div class="vault-photo-card"><img src="https://res.cloudinary.com/dbwbncxmh/image/upload/v1779689137/Drafts_cleared_ft.crime_partner_gogo_deepikabiswas70315.03.2026_-_sancharii__thenkss.heic.jpg" alt="Clip 06"></div>
+                <div class="vault-photo-card"><img src="https://res.cloudinary.com/dbwbncxmh/image/upload/v1779689136/Drafts_cleared_ft.crime_partner_gogo_deepikabiswas70315.03.2026_-_sancharii__thenkss.heic_2.jpg"></div>
+                <div class="vault-photo-card"><img src="https://res.cloudinary.com/dbwbncxmh/image/upload/v1779689138/Drafts_cleared_ft.crime_partner_gogo_deepikabiswas70315.03.2026_-_sancharii__thenkss.heic_3.jpg" alt="Clip 08"></div>
+                <div class="vault-photo-card"><img src="https://res.cloudinary.com/dbwbncxmh/image/upload/v1779689136/Drafts_cleared_ft.crime_partner_gogo_deepikabiswas70315.03.2026_-_sancharii__thenkss.heic_1.jpg" alt="Clip 09"></div>
+                <div class="vault-photo-card"><img src="https://res.cloudinary.com/dbwbncxmh/image/upload/v1779689138/IMG_20260411_110853.jpg" alt="Clip 10"></div>
+                <div class="vault-photo-card"><img src="https://res.cloudinary.com/dbwbncxmh/image/upload/v1779689139/IMG20260409114300.jpg" alt="Clip 11"></div>
+                <div class="vault-photo-card"><img src="https://res.cloudinary.com/dbwbncxmh/image/upload/v1779689150/IMG-20260425-WA0088.jpg" alt="Clip 12"></div>
+                <div class="vault-photo-card"><img src="https://res.cloudinary.com/dbwbncxmh/image/upload/v1779689214/IMG20260410154403.jpg" alt="Clip 13"></div>
+               
+            </div>
+        </div>
+    </div>
+
+    <!-- FULL-SCREEN ABOUT ME MODAL LAYER -->
+    <div id="about-overlay" class="fixed inset-0 bg-[#08080c] hidden flex-col z-[100] transition-opacity duration-300 opacity-0 overflow-y-auto">
+        <button onclick="toggleAboutModal(false)" class="fixed top-6 right-8 z-[200] text-white hover:text-amber-400 font-mono text-xs uppercase tracking-widest cursor-pointer smooth-glow">
+            &times; Close
+        </button>
+        <div class="split-about-container">
+            <div class="glow-canvas-wrapper">
+                <div class="orb-cyan"></div>
+                <div class="orb-indigo"></div>
+                <div class="orb-violet"></div>
+            </div>
+            
+            <div class="left-gallery-column">
+                <div class="hover-trigger-left" title="Hover Left Side"></div>
+                <div class="hover-trigger-right" title="Hover Right Side"></div>
+                <div class="gallery-stage">
+                    <div class="art-frame pos-left-1"><img src="https://res.cloudinary.com/dbwbncxmh/image/upload/v1779688428/IMG_20220210_231509.jpg" alt="Slide 1"></div>
+                    <div class="art-frame pos-left-2"><img src="https://res.cloudinary.com/dbwbncxmh/image/upload/v1779688427/2456.jpg" alt="Slide 2"></div>
+                    <div class="art-frame center-sketch"><img src="https://res.cloudinary.com/dbwbncxmh/image/upload/v1779688428/about-sketch.png" alt="Profile Sketch"></div>
+                    <div class="art-frame pos-right-1"><img src="https://res.cloudinary.com/dbwbncxmh/image/upload/v1779688431/IMG_20260426_093333.jpg" alt="Slide 3"></div>
+                    <div class="art-frame pos-right-2"><img src="https://res.cloudinary.com/dbwbncxmh/image/upload/v1779688427/1000298015.jpg" alt="Slide 4"></div>
+                </div>
+            </div>
+            
+            <div class="right-text-column">
+                <div class="glass-glow-card">
+                    <div class="glass-glow-card-glow-element"></div>
+                    <div class="index-number">SHIRSENDU MONDAL</div>
+                    <h2 class="main-header">ABOUT<br>ME</h2>
+                    <p class="narrative-p">
+                        This environment was architected from the ground up to fulfill a fundamental goal—to keep my personal <span class="glow-word">visual clicks visible</span> in a permanent digital space rather than letting them fade inside an offline storage drive.
+                    </p>
+                    <p class="narrative-p">
+                        As a <span class="glow-word">Computer Science & Engineering graduate</span>, my mind operates on structural logic, programming paradigms, and systems architecture. But beyond the IDE, capturing moments is my pure sanctuary.
+                    </p>
+                    <p class="narrative-p">
+                        This portfolio serves as the structural junction where my core technological training seamlessly merges with an ongoing exploration of photography.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ARCADE INTERFACE MODULE -->
+    <div id="games-overlay" onclick="toggleGamesModal(false)" class="fixed inset-0 bg-black/90 backdrop-blur-xl hidden flex-col justify-center items-center z-50 p-4 transition-opacity duration-300 opacity-0">
+        <div class="max-w-3xl w-full bg-[#fdfdfd] border border-neutral-200 p-8 rounded-sm shadow-[0_25px_60px_rgba(0,0,0,0.4)] scale-95 transition-transform duration-300 ease-out flex flex-col gap-6 cursor-default text-neutral-900" onclick="event.stopPropagation()">
+            
+            <div class="flex justify-between items-center border-b border-neutral-200 pb-4">
+                <div class="flex gap-6 font-mono text-xs uppercase tracking-widest">
+                    <button onclick="switchGameMode('tictactoe')" id="tab-tictactoe" class="text-neutral-400 hover:text-neutral-900 pb-1.5 smooth-glow cursor-pointer">Tic-Tac-Toe</button>
+                    <button onclick="switchGameMode('sudoku')" id="tab-sudoku" class="text-neutral-400 hover:text-neutral-900 smooth-glow pb-1.5 cursor-pointer">Soduko</button>
+                    <button onclick="switchGameMode('snake')" id="tab-snake" class="text-amber-600 font-bold border-b-2 border-amber-500 pb-1.5 smooth-glow cursor-pointer">Snake</button>
+                </div>
+                <button onclick="toggleGamesModal(false)" class="text-xs text-neutral-400 hover:text-neutral-900 font-mono uppercase tracking-wider cursor-pointer">&times; Exit</button>
+            </div>
+
+            <!-- TIC-TAC-TOE -->
+            <div id="game-tictactoe-viewport" class="hidden flex flex-col items-center gap-4 animate-fade-in">
+                <div class="text-center">
+                    <h4 class="text-xs font-mono font-bold tracking-[0.2em] text-neutral-800 uppercase">MATCH // VS SHIRSENDU</h4>
+                    <p class="text-[10px] font-mono text-neutral-400 uppercase tracking-wide mt-1" id="ttt-status">Your Turn (You are X)</p>
+                </div>
+                <div class="grid grid-cols-3 gap-3 w-[480px] h-[480px] bg-neutral-100 p-3 border border-neutral-200 rounded-sm">
+                    <div onclick="makeTTTMove(0)" class="ttt-cell bg-white border border-neutral-200 rounded-xs flex items-center justify-center text-4xl font-extralight font-mono hover:bg-neutral-50 smooth-glow text-neutral-800 cursor-pointer"></div>
+                    <div onclick="makeTTTMove(1)" class="ttt-cell bg-white border border-neutral-200 rounded-xs flex items-center justify-center text-4xl font-extralight font-mono hover:bg-neutral-50 smooth-glow text-neutral-800 cursor-pointer"></div>
+                    <div onclick="makeTTTMove(2)" class="ttt-cell bg-white border border-neutral-200 rounded-xs flex items-center justify-center text-4xl font-extralight font-mono hover:bg-neutral-50 smooth-glow text-neutral-800 cursor-pointer"></div>
+                    <div onclick="makeTTTMove(3)" class="ttt-cell bg-white border border-neutral-200 rounded-xs flex items-center justify-center text-4xl font-extralight font-mono hover:bg-neutral-50 smooth-glow text-neutral-800 cursor-pointer"></div>
+                    <div onclick="makeTTTMove(4)" class="ttt-cell bg-white border border-neutral-200 rounded-xs flex items-center justify-center text-4xl font-extralight font-mono hover:bg-neutral-50 smooth-glow text-neutral-800 cursor-pointer"></div>
+                    <div onclick="makeTTTMove(5)" class="ttt-cell bg-white border border-neutral-200 rounded-xs flex items-center justify-center text-4xl font-extralight font-mono hover:bg-neutral-50 smooth-glow text-neutral-800 cursor-pointer"></div>
+                    <div onclick="makeTTTMove(6)" class="ttt-cell bg-white border border-neutral-200 rounded-xs flex items-center justify-center text-4xl font-extralight font-mono hover:bg-neutral-50 smooth-glow text-neutral-800 cursor-pointer"></div>
+                    <div onclick="makeTTTMove(7)" class="ttt-cell bg-white border border-neutral-200 rounded-xs flex items-center justify-center text-4xl font-extralight font-mono hover:bg-neutral-50 smooth-glow text-neutral-800 cursor-pointer"></div>
+                    <div onclick="makeTTTMove(8)" class="ttt-cell bg-white border border-neutral-200 rounded-xs flex items-center justify-center text-4xl font-extralight font-mono hover:bg-neutral-50 smooth-glow text-neutral-800 cursor-pointer"></div>
+                </div>
+                <button onclick="resetTTT()" class="text-[9px] font-mono tracking-widest border border-neutral-200 hover:border-neutral-400 bg-white px-4 py-2 rounded-xs text-neutral-500 uppercase smooth-glow cursor-pointer">Reset Matrix</button>
+            </div>
+
+            <!-- SUDOKO -->
+            <div id="game-sudoku-viewport" class="hidden flex flex-col items-center gap-4 animate-fade-in">
+                <div class="text-center">
+                    <h4 class="text-xs font-mono font-bold tracking-[0.2em] text-neutral-800 uppercase">SODUKO</h4>
+                    <p class="text-[9px] font-mono text-neutral-400 uppercase tracking-wider mt-1">Correct answers turn emerald green dynamically</p>
+                </div>
+                <div id="sudoku-9x9-wrapper" class="grid grid-cols-9 gap-0.5 p-1.5 bg-neutral-300 border-2 border-neutral-400 rounded-xs w-[480px] h-[480px]"></div>
+                <div class="flex gap-4 w-full max-w-[480px]">
+                    <button onclick="generateNewSudoku9x9()" class="flex-1 text-[9px] font-mono tracking-widest border border-neutral-200 hover:border-neutral-400 bg-white px-3 py-2.5 rounded-xs text-neutral-500 uppercase text-center smooth-glow cursor-pointer">Generate New Grid</button>
+                    <button onclick="checkSudoku9x9Solution()" class="flex-1 text-[9px] font-mono tracking-widest bg-neutral-900 text-white px-4 py-2.5 rounded-xs hover:bg-neutral-800 uppercase font-medium text-center smooth-glow cursor-pointer">Submit Puzzle</button>
+                </div>
+            </div>
+
+            <!-- SNAKE GAME -->
+            <div id="game-snake-viewport" class="hidden flex flex-col items-center gap-4 animate-fade-in">
+                <div class="text-center">
+                    <h4 class="text-xs font-mono font-bold tracking-[0.2em] text-neutral-800 uppercase">CINEMATIC SNAKE RUN</h4>
+                    <p class="text-[10px] font-mono text-neutral-400 uppercase mt-1">Score: <span id="snake-score-display" class="text-amber-600 font-bold">0</span> // Use Keyboard Arrow Keys</p>
+                </div>
+                
+                <div class="relative w-[480px] h-[480px] bg-neutral-50 border border-neutral-200 rounded-xs shadow-sm overflow-hidden">
+                    <canvas id="snakeCanvas" width="480" height="480" class="absolute inset-0 outline-none" tabindex="0"></canvas>
+                    
+                    <div id="snake-start-overlay" class="absolute inset-0 bg-neutral-950/80 backdrop-blur-xs flex flex-col justify-center items-center rounded-xs transition-opacity duration-300 z-10">
+                        <p class="text-[10px] font-mono text-neutral-400 uppercase tracking-widest mb-4">Avatar Profile: Ready</p>
+                        <button onclick="startSnakeActiveLoop()" class="text-xs font-mono tracking-widest bg-white text-black px-6 py-3 rounded-xs hover:bg-neutral-200 uppercase font-bold smooth-glow shadow-md cursor-pointer">Start Game</button>
+                    </div>
+                </div>
+                
+                <button onclick="prepareSnakeBoard()" class="text-[9px] font-mono tracking-widest bg-neutral-900 text-white px-5 py-2.5 rounded-xs hover:bg-neutral-800 uppercase smooth-glow font-medium cursor-pointer">Reset Run</button>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- COMMENTS DRAWER MODULE -->
+    <div id="comments-drawer" class="fixed inset-y-0 right-0 w-80 sm:w-96 bg-neutral-950/98 border-l border-neutral-900 backdrop-blur-xl z-[60] p-6 shadow-2xl transform translate-x-full transition-transform duration-500 ease-out flex flex-col justify-between hidden">
+        <div>
+            <div class="flex justify-between items-baseline border-b border-neutral-900 pb-4 mb-6">
+                <h3 class="text-xs font-mono uppercase tracking-widest text-neutral-400">FRAME COMMENTS</h3>
+                <button onclick="toggleCommentsDrawer(false)" class="text-xs text-neutral-600 hover:text-white font-mono uppercase tracking-wider cursor-pointer">&times; Dismiss</button>
+            </div>
+            <!-- Dynamic Comment Nodes Feed -->
+            <div id="drawer-comments-feed" class="flex flex-col gap-4 overflow-y-auto max-h-[60vh] pr-2 font-mono text-[11px] leading-relaxed text-neutral-400">
+            </div>
+        </div>
+        <!-- Input Text Formulation Box -->
+        <div class="border-t border-neutral-900 pt-4 mt-4 flex flex-col gap-2">
+            <input type="text" id="new-comment-field" placeholder="ADD OBSERVATION VECTOR..." class="w-full bg-neutral-900 border border-neutral-800 rounded-xs px-3 py-2 text-[10px] font-mono tracking-wider focus:outline-none focus:border-amber-400 text-white">
+            <button onclick="submitNewCardComment()" class="w-full bg-white text-black font-mono font-bold text-[10px] tracking-widest py-2 rounded-xs uppercase hover:bg-neutral-200 smooth-glow cursor-pointer">Post Entry</button>
+        </div>
+    </div>
+
+    <!-- Audio Drawer & Controller Elements -->
+    <audio id="bg-audio" loop></audio>
+    
+    <!-- Pigeon Wing Sound Engine -->
+    <audio id="wingSound" preload="auto">
+        <source src="https://assets.mixkit.co/active_storage/sfx/212/212-preview.mp3" type="audio/mp3">
+    </audio>
+
+    <div id="music-drawer" class="fixed top-0 right-0 h-full w-80 z-50 bg-neutral-950/95 border-l border-neutral-900/60 backdrop-blur-xl shadow-2xl p-6 transform translate-x-full transition-transform duration-500 ease-out flex flex-col justify-between">
+        <div>
+            <div class="flex justify-between items-baseline mb-8">
+                <h3 class="text-xs uppercase font-mono tracking-widest text-neutral-400">Gallery Soundtrack</h3>
+                <button onclick="toggleMusicDrawer(false)" class="text-xs font-mono text-neutral-600 hover:text-white cursor-pointer">&times; Close</button>
+            </div>
+            <div id="playlist-container" class="flex flex-col gap-2 max-h-[70vh] overflow-y-auto overscroll-contain pb-24 pointer-events-auto"></div>
+        </div>
+    </div>
+
+    <div id="floating-controller" class="fixed bottom-6 right-6 z-40 bg-neutral-950/90 border border-neutral-900/80 backdrop-blur-md px-4 py-3 rounded-sm flex items-center gap-4 shadow-xl select-none hidden">
+        <div class="flex flex-col">
+            <span class="text-[9px] text-neutral-500 font-mono uppercase tracking-widest flex items-center gap-1">
+                <span id="sound-wave-dot" class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-ping"></span> Now Playing
+            </span>
+            <span id="persistent-track-status" class="text-[11px] text-neutral-300 font-mono tracking-wide truncate max-w-[130px]">No Track Loaded</span>
+        </div>
+        <button onclick="toggleAudioPlayback()" class="w-8 h-8 rounded-full bg-white/10 hover:bg-white text-white hover:text-black flex justify-center items-center smooth-glow cursor-pointer">
+            <svg id="p-play" xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 fill-current ml-0.5" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            <svg id="p-pause" xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 fill-current hidden" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+        </button>
+    </div>
+
+    <footer class="max-w-7xl w-full mx-auto text-center pt-16 text-[10px] tracking-[0.25em] uppercase border-t border-neutral-900/60" style="color: var(--text-muted); border-color: var(--border-color);">
+        &copy; 2026 XenonClicks // Visual Direction Works
+    </footer>
+<div id="congrats-modal" class="fixed inset-0 z-[2000000] hidden flex-col justify-center items-center bg-black/60 backdrop-blur-lg transition-opacity duration-500 opacity-0">
+        <div class="bg-neutral-950/90 border border-white/10 p-10 rounded-xl text-center max-w-md shadow-[0_0_60px_rgba(251,191,36,0.1)] transform scale-95 transition-transform duration-500" id="congrats-box">
+            <div class="mb-6 flex justify-center">
+                <span class="text-3xl filter drop-shadow-[0_0_15px_rgba(251,191,36,0.6)]">⏱️</span>
+            </div>
+            <h2 class="text-white text-lg font-bold font-['Syncopate'] uppercase tracking-widest mb-4">Dedicated Explorer</h2>
+            <p class="text-neutral-400 font-mono text-xs leading-relaxed mb-8">
+                You've been exploring this space for over 10 minutes. You must really appreciate the cinematic vision and the clicks. Thank you for your time.
+            </p>
+            <button onclick="acceptCongrats()" class="action-btn px-8 py-3 bg-white text-black rounded-sm font-bold uppercase tracking-widest text-[10px] hover:bg-amber-400 smooth-glow cursor-pointer w-full">
+                Acknowledge
+            </button>
+        </div>
+    </div>
+    <!-- Operational Script Logic Stack -->
+    <script>
+      // ─── UPGRADED CINEMATIC GREETING ENGINE ───
+async function saveUsername() {
+    const nameInput = document.getElementById('userNameInput');
+    const name = nameInput.value.trim();
+    if (!name) { nameInput.style.borderColor = "#ef4444"; return; }
+
+    localStorage.setItem('portfolioUser', name);
+    
+    // Hide Gate
+    const gate = document.getElementById('welcome-gate');
+    gate.style.opacity = '0';
+    setTimeout(() => gate.style.display = 'none', 1000);
+    
+    // Show Overlay
+    const overlay = document.getElementById('welcome-overlay');
+    const textContainer = document.getElementById('welcomeText');
+    overlay.classList.remove('hidden');
+    setTimeout(() => overlay.classList.remove('opacity-0'), 50);
+
+    const lines = [
+        "WELCOME",
+        `<span class="welcome-glow-text">${name.toUpperCase()}</span>`,
+        "WELCOME TO MY PHOTOGALLERY WEBSITE!",
+        "HOPE YOU ENJOY MY CLICKS!"
+    ];
+
+    for (let line of lines) {
+        const div = document.createElement('div');
+        div.className = "text-line mb-4"; // Uses the new CSS
+        div.innerHTML = line;
+        textContainer.appendChild(div);
+        
+        // Staggered trigger for the CSS class
+        await new Promise(r => setTimeout(r, 600)); // Slower beat for premium feel
+        div.classList.add('visible');
+    }
+    
+    // Longer exit duration for better impact
+    setTimeout(() => {
+        overlay.classList.add('opacity-0');
+        setTimeout(() => {
+            overlay.classList.add('hidden');
+            updateHeader(name);
+        }, 1000);
+    }, 6000); // Stays on screen for 6 full seconds
+}
+function updateHeader(name) {
+    const headerTag = document.getElementById('viewingAsTag');
+    if (headerTag) headerTag.innerText = `Viewing as: ${name}`;
+}
+function updateHeader(name) {
+    const headerTag = document.getElementById('viewingAsTag');
+    if (headerTag) headerTag.innerText = `Viewing as: ${name}`;
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+    const savedName = localStorage.getItem('portfolioUser');
+    if (savedName) {
+        document.getElementById('welcome-gate').style.display = 'none';
+        updateHeader(savedName);
+    }
+});
+        // ─── STABILIZED HARDWARE CONFETTI SIMULATOR ENGINE ───
+        const confCanvas = document.getElementById('confettiEffectCanvas');
+        const confCtx = confCanvas.getContext('2d');
+        let activeConfettiParticles = [];
+
+        function resizeConfettiCanvas() { confCanvas.width = window.innerWidth; confCanvas.height = window.innerHeight; }
+        window.addEventListener('resize', resizeConfettiCanvas);
+        resizeConfettiCanvas();
+
+        function triggerConfettiBurst(targetX, targetY) {
+            const paletteColors = ['#fbbf24', '#f59e0b', '#3b82f6', '#ef4444', '#10b981'];
+            for(let i=0; i<35; i++) { // Increase the number 35 here if you want more particles per click!
+                activeConfettiParticles.push({
+                    x: targetX, y: targetY, size: Math.random() * 5 + 3,
+                    color: paletteColors[Math.floor(Math.random() * paletteColors.length)],
+                    speedX: (Math.random() - 0.5) * 10, 
+                    speedY: (Math.random() - 0.6) * 15 - 5, // Increased upward force so they shoot higher
+                    gravity: 0.15, // Lowered from 0.35 so they float down slower
+                    opacity: 1
+                });
+            }
+        }
+        function stepConfettiSimulationFrame() {
+            confCtx.clearRect(0, 0, confCanvas.width, confCanvas.height);
+            activeConfettiParticles.forEach((p, idx) => {
+                p.x += p.speedX; p.y += p.speedY; p.speedY += p.gravity; p.opacity -= 0.02;
+                if(p.opacity <= 0) { activeConfettiParticles.splice(idx, 1); return; }
+                confCtx.save(); confCtx.globalAlpha = p.opacity; confCtx.fillStyle = p.color;
+                confCtx.fillRect(p.x, p.y, p.size, p.size); confCtx.restore();
+            });
+            requestAnimationFrame(stepConfettiSimulationFrame);
+        }
+        requestAnimationFrame(stepConfettiSimulationFrame);
+
+        // ─── SINGLE JS REALISTIC PIGEON ENGINE ───
+        const pigeonImage = 'pigeon.png';
+        
+        function launchRealisticPigeons(startX, startY) {
+            const wingSound = document.getElementById('wingSound');
+            if(wingSound) {
+                wingSound.currentTime = 0;
+                wingSound.volume = 0.22;
+                wingSound.play().catch(() => {});
+            }
+            createPigeon(startX, startY, 0);
+        }
+
+        function createPigeon(startX, startY, index) {
+            const pigeon = document.createElement('div');
+            pigeon.className = 'pigeon';
+            pigeon.innerHTML = `<div class="glow"></div><img src="${pigeonImage}" alt="Flying Pigeon" />`;
+            document.body.appendChild(pigeon);
+
+            const img = pigeon.querySelector('img');
+            let x = startX; let y = startY;
+            let velocityX = 1.2 + Math.random() * 0.45;
+            let velocityY = -0.35 - Math.random() * 0.2;
+            let rotation = -8; let scale = 0.72; let time = 0;
+
+            function animate() {
+                time += 0.016;
+                const flap = Math.sin(time * 6) * 8;
+                const wingLift = Math.sin(time * 6) * 1.4;
+
+                x += velocityX;
+                y += velocityY + Math.sin(time * 2.2 + index) * 0.5 - wingLift * 0.08;
+                scale += 0.00008;
+
+                const blurAmount = Math.min(0.8, velocityX * 0.05);
+
+                pigeon.style.left = `${x}px`;
+                pigeon.style.top = `${y}px`;
+                pigeon.style.transform = `translate(-50%, -50%) rotate(${rotation + flap * 0.05}deg) scale(${scale})`;
+                img.style.transform = `scaleY(${1 + Math.sin(time * 10) * 0.04}) rotate(${Math.sin(time * 10) * 1.2}deg)`;
+                pigeon.style.filter = `blur(${blurAmount}px) drop-shadow(0 10px 18px rgba(0,0,0,0.18))`;
+
+                if (Math.random() < 0.05) createFeather(x + 18, y + 36);
+
+                if (x > window.innerWidth + 320 || y < -280) {
+                    pigeon.remove(); return;
+                }
+                requestAnimationFrame(animate);
+            }
+            requestAnimationFrame(animate);
+        }
+
+        function createFeather(x, y) {
+            const feather = document.createElement('div');
+            feather.className = 'feather';
+            feather.style.left = `${x}px`; feather.style.top = `${y}px`;
+            document.body.appendChild(feather);
+
+            let opacity = 0.9; let driftX = 0; let driftY = 0; let scale = Math.random() * 0.8 + 0.4;
+
+            function drift() {
+                opacity -= 0.015;
+                driftX += Math.random() * 1.4 - 0.7; driftY += 0.7; scale += 0.01;
+                feather.style.opacity = opacity;
+                feather.style.transform = `translate(${driftX}px, ${driftY}px) scale(${scale})`;
+
+                if (opacity <= 0) { feather.remove(); return; }
+                requestAnimationFrame(drift);
+            }
+            requestAnimationFrame(drift);
+        }
+
+       // ─── OFFLINE LIKE ENGINE (WITH 10-LIKE SESSION LIMIT) ───
+function triggerButtonLike(event, photoId) {
+    if (event) event.stopPropagation();
+    
+    // 1. Check current session total likes across the entire site
+    let sessionLikes = parseInt(sessionStorage.getItem('portfolio_session_likes') || '0');
+    
+    // 2. Enforce the hard cap of 10
+    if (sessionLikes >= 10) {
+        showLikeLimitAlert();
+        return;
+    }
+
+    // 3. Offline Save: Increment the specific photo's likes in localStorage
+    let localLikesData = JSON.parse(localStorage.getItem('offline_photo_likes') || '{}');
+    let currentPhotoLikes = localLikesData[photoId] || 0;
+    
+    // Update local storage data
+    localLikesData[photoId] = currentPhotoLikes + 1;
+    localStorage.setItem('offline_photo_likes', JSON.stringify(localLikesData));
+
+    // 4. Update the Total Session Count
+    sessionStorage.setItem('portfolio_session_likes', sessionLikes + 1);
+
+    // 5. Instantly Update the UI Counter Badge on the Card
+    const counter = document.getElementById(`like-count-${photoId}`);
+    if (counter) {
+        counter.innerText = localLikesData[photoId];
+    }
+
+    // 6. Trigger your cinematic animations
+    if (event && typeof triggerConfettiBurst === "function") {
+        triggerConfettiBurst(event.clientX, event.clientY);
+    }
+    if (event && typeof launchRealisticPigeons === "function") {
+        launchRealisticPigeons(event.clientX, event.clientY);
+    }
+}
+
+// ─── OPTIONAL: DOUBLE TAP LIKE SUPPORT ───
+// ─── OPTIONAL: DOUBLE TAP LIKE SUPPORT ───
+function triggerDoubleTapLike(element, photoId) {
+    // 👇 Change this line to call your NEW global function instead of the old one
+    triggerGlobalLike(null, photoId);
+    
+    // Trigger your heart flash animation on the card
+    const flash = element.querySelector('.heart-flash');
+    if (flash) {
+        flash.style.opacity = '1';
+        flash.style.transform = 'scale(1)';
+        setTimeout(() => {
+            flash.style.opacity = '0';
+            flash.style.transform = 'scale(0.5)';
+        }, 500);
+    }
+}
+
+// ─── SLEEK ALERT REPLACEMENT ───
+function showLikeLimitAlert() {
+    // Instead of a cheap browser alert, this prints a clean message to the console
+    // Or you can use a custom toast banner if you want to expand it later.
+    console.log("SESSION ACCREDITATION LIMIT REACHED - 10 LIKES MAX PER VISIT");
+    
+    // Fallback standard alert so you know it works during offline testing:
+    alert("You've reached your appreciation limit of 10 likes for this session!");
+}
+        // ──────────────────────────────────────────https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_0040.jpg
+const myImagesCollection = [
+    { id: 1, title: "DSC_0302", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_0302.jpg", exif: "Camera // Standard" },
+    { id: 2, title: "DSC_0204", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_0204.jpg", exif: "NIKON D5600 // 300mm // f/6.3 // ISO 2000" },
+    { id: 3, title: "DSC_0252edt", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_0252edt.jpg", exif: "D5600 // 300mm // f/8.0 // ISO 220" },
+    { id: 4, title: "DSC_0209", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_0209.jpg", exif: "NIKON D5600 // 300mm // f/6.3 // ISO 4500" },
+    { id: 5, title: "DSC_0268", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_0268.jpg", exif: "Camera // Standard" },
+    { id: 6, title: "DSC_0232", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_0232.jpg", exif: "NIKON D5600 // 300mm // f/6.3 // ISO 360" },
+    { id: 7, title: "DSC_0290", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_0290.jpg", exif: "Camera // Standard" },
+    { id: 8, title: "DSC_0235", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_0235.jpg", exif: "NIKON D5600 // 300mm // f/6.3 // ISO 250" },
+    { id: 9, title: "DSC_0342", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_0342.jpg", exif: "Camera // Standard" },
+    { id: 10, title: "DSC_0238", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_0238.jpg", exif: "Camera // Standard" },
+    { id: 11, title: "IMG20220411164728", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/IMG20220411164728.jpg", exif: "Camera // Standard" },
+    { id: 12, title: "DSC_0991", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_0991.jpg", exif: "NIKON D5600 // 100mm // f/11.0 // ISO 400" },
+    { id: 13, title: "DSC_0025", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_0025.jpg", exif: "Camera // Standard" },
+    { id: 14, title: "DSC_1192", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_1192.jpg", exif: "Camera // Standard" },
+    { id: 15, title: "DSC_0027", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_0027.jpg", exif: "Camera // Standard" },
+    { id: 16, title: "DSC_1193", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_1193.jpg", exif: "Camera // Standard" },
+    { id: 17, title: "DSC_0047", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_0047.jpg", exif: "NIKON D5600 // 300mm // f/6.3 // ISO 400" },
+    { id: 18, title: "DSC_1195", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_1195.jpg", exif: "Camera // Standard" },
+    { id: 19, title: "DSC_0041", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_0041.jpg", exif: "NIKON D5600 // 35mm // f/9.0 // ISO 200" },
+    { id: 20, title: "DSC_1200", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_1200.jpg", exif: "Camera // Standard" },
+    { id: 21, title: "DSC_0081", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_0081.jpg", exif: "Camera // Standard" },
+    { id: 22, title: "DSC_1211", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_1211.jpg", exif: "Camera // Standard" },
+    { id: 23, title: "DSC_0083", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_0083.jpg", exif: "Camera // Standard" },
+    { id: 24, title: "DSC_1215", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_1215.jpg", exif: "Camera // Standard" },
+    { id: 25, title: "DSC_0086", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_0086.jpg", exif: "Camera // Standard" },
+    { id: 26, title: "DSC_1216", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_1216.jpg", exif: "Camera // Standard" },
+    { id: 27, title: "DSC_0087", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_0087.jpg", exif: "Camera // Standard" },
+    { id: 28, title: "DSC_1217", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_1217.jpg", exif: "Camera // Standard" },
+    { id: 29, title: "DSC_0088", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_0088.jpg", exif: "Camera // Standard" },
+    { id: 30, title: "DSC_1221", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_1221.jpg", exif: "Camera // Standard" },
+    { id: 31, title: "DSC_0090", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_0090.jpg", exif: "Camera // Standard" },
+    { id: 32, title: "DSC_1230", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_1230.jpg", exif: "Camera // Standard" },
+    { id: 33, title: "DSC_0091", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_0091.jpg", exif: "Camera // Standard" },
+    { id: 34, title: "DSC_1231", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_1231.jpg", exif: "Camera // Standard" },
+    { id: 35, title: "DSC_0092", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_0092.jpg", exif: "Camera // Standard" },
+    { id: 36, title: "DSC_1238", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_1238.jpg", exif: "Camera // Standard" },
+    { id: 37, title: "DSC_0093", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_0093.jpg", exif: "Camera // Standard" },
+    { id: 38, title: "DSC_1249", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_1249.jpg", exif: "Camera // Standard" },
+    { id: 39, title: "DSC_0097", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_0097.jpg", exif: "Camera // Standard" },
+    { id: 40, title: "DSC_1252", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_1252.jpg", exif: "Camera // Standard" },
+    { id: 41, title: "DSC_0099", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_0099.jpg", exif: "Camera // Standard" },
+    { id: 42, title: "DSC_1258", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_1258.jpg", exif: "Camera // Standard" },
+    { id: 43, title: "DSC_0100", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_0100.jpg", exif: "Camera // Standard" },
+    { id: 44, title: "DSC_1298", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_1298.jpg", exif: "NIKON D5600 // 300mm // f/6.3 // ISO 200" },
+    { id: 45, title: "DSC_0107", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_0107.jpg", exif: "Camera // Standard" },
+    { id: 46, title: "DSC_1300", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_1300.jpg", exif: "NIKON D5600 // 300mm // f/8.0 // ISO 200" },
+    { id: 47, title: "DSC_0068", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_0068.jpg", exif: "NIKON D5600 // 85mm // f/1.8 // ISO 800" },
+    { id: 48, title: "DSC_1301", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_1301.jpg", exif: "NIKON D5600 // 300mm // f/7.1 // ISO 200" },
+    { id: 49, title: "DSC_0069", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_0069.jpg", exif: "Camera // Standard" },
+    { id: 50, title: "DSC_1302", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_1302.jpg", exif: "NIKON D5600 // 300mm // f/7.1 // ISO 200" },
+    { id: 51, title: "DSC_0079", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_0079.jpg", exif: "Camera // Standard" },
+    { id: 52, title: "DSC_1303", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_1303.jpg", exif: "NIKON D5600 // 300mm // f/8.0 // ISO 200" },
+    { id: 53, title: "DSC_0111", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_0111.jpg", exif: "Camera // Standard" },
+    { id: 54, title: "DSC_01311", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_01311.jpg", exif: "Camera // Standard" },
+    { id: 55, title: "DSC_0114", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_0114.jpg", exif: "Camera // Standard" },
+    { id: 56, title: "DSC_1311", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_1311.jpg", exif: "NIKON D5600 // 280mm // f/6.3 // ISO 560" },
+    { id: 57, title: "DSC_0118", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_0118.jpg", exif: "NIKON D5600 // 300mm // f/6.3 // ISO 450" },
+    { id: 58, title: "DSC_1748", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_1748.jpg", exif: "NIKON D5600 // 300mm // f/6.3 // ISO 900" },
+    { id: 59, title: "DSC_0122", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_0122.jpg", exif: "NIKON D5600 // 300mm // f/6.3 // ISO 1600" },
+    { id: 60, title: "IMG_20201026_084418", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/IMG_20201026_084418.jpg", exif: "Camera // Standard" },
+    { id: 61, title: "DSC_0141", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_0141.jpg", exif: "Camera // Standard" },
+    { id: 62, title: "DSC_0344", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_0344.jpg", exif: "Camera // Standard" },
+    { id: 63, title: "DSC_0162", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_0162.jpg", exif: "NIKON D5600 // 85mm // f/1.8 // ISO 1600" },
+    { id: 64, title: "DSC_0345", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_0345.jpg", exif: "Camera // Standard" },
+    { id: 65, title: "DSC_0182", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_0182.jpg", exif: "Camera // Standard" },
+    { id: 66, title: "DSC_0356", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_0356.jpg", exif: "Camera // Standard" },
+    { id: 67, title: "DSC_0204", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_0204.jpg", exif: "NIKON D5600 // 300mm // f/6.3 // ISO 2000" },
+    { id: 68, title: "DSC_0362", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_0362.jpg", exif: "Camera // Standard" },
+    { id: 69, title: "DSC_0209", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_0209.jpg", exif: "NIKON D5600 // 300mm // f/6.3 // ISO 4500" },
+    { id: 70, title: "DSC_0369", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_0369.jpg", exif: "Camera // Standard" },
+    { id: 71, title: "DSC_0232", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_0232.jpg", exif: "NIKON D5600 // 300mm // f/6.3 // ISO 360" },
+    { id: 72, title: "DSC_0419", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_0419.jpg", exif: "NIKON D5600 // 35mm // f/1.8 // ISO 125" },
+    { id: 73, title: "DSC_0235", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_0235.jpg", exif: "NIKON D5600 // 300mm // f/6.3 // ISO 250" },
+    { id: 74, title: "DSC_0420", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_0420.jpg", exif: "NIKON D5600 // 35mm // f/1.8 // ISO 125" },
+    { id: 75, title: "DSC_0238", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_0238.jpg", exif: "Camera // Standard" },
+    { id: 76, title: "DSC_0491", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_0491.jpg", exif: "Camera // Standard" },
+    { id: 77, title: "DSC_0991", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_0991.jpg", exif: "NIKON D5600 // 100mm // f/11.0 // ISO 400" },
+    { id: 78, title: "DSC_0494", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_0494.jpg", exif: "D5600 // 300mm // f/6.3 // ISO 10000" },
+    { id: 79, title: "DSC_1192", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_1192.jpg", exif: "Camera // Standard" },
+    { id: 80, title: "DSC_0497", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_0497.jpg", exif: "Camera // Standard" },
+    { id: 81, title: "DSC_1193", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_1193.jpg", exif: "Camera // Standard" },
+    { id: 82, title: "DSC_0500", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_0500.jpg", exif: "Camera // Standard" },
+    { id: 83, title: "DSC_1195", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_1195.jpg", exif: "Camera // Standard" },
+    { id: 84, title: "DSC_0530", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_0530.jpg", exif: "NIKON D5600 // 170mm // f/8.0 // ISO 400" },
+    { id: 85, title: "DSC_1200", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_1200.jpg", exif: "Camera // Standard" },
+    { id: 86, title: "DSC_0690", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_0690.jpg", exif: "NIKON D5600 // 35mm // f/5.6 // ISO 100" },
+    { id: 87, title: "DSC_1211", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_1211.jpg", exif: "Camera // Standard" },
+    { id: 88, title: "DSC_0693", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_0693.jpg", exif: "NIKON D5600 // 35mm // f/5.6 // ISO 100" },
+    { id: 89, title: "DSC_1215", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_1215.jpg", exif: "Camera // Standard" },
+    { id: 90, title: "DSC_0695", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_0695.jpg", exif: "NIKON D5600 // 35mm // f/5.6 // ISO 100" },
+    { id: 91, title: "DSC_1216", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_1216.jpg", exif: "Camera // Standard" },
+    { id: 92, title: "DSC_0904", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_0904.jpg", exif: "Camera // Standard" },
+    { id: 93, title: "DSC_1217", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_1217.jpg", exif: "Camera // Standard" },
+    { id: 94, title: "DSC_0905", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_0905.jpg", exif: "Camera // Standard" },
+    { id: 95, title: "DSC_1221", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_1221.jpg", exif: "Camera // Standard" },
+    { id: 96, title: "DSC_0906", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_0906.jpg", exif: "Camera // Standard" },
+    { id: 97, title: "IMG20250326131507", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/IMG20250326131507.jpg", exif: "Camera // Standard" },
+    { id: 98, title: "IMG20240614210157", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/IMG20240614210157.jpg", exif: "Camera // Standard" },
+    { id: 99, title: "IMG_20201027_073841", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/IMG_20201027_073841.jpg", exif: "Camera // Standard" },
+    { id: 100, title: "IMG_20201119_073928", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/IMG_20201119_073928.jpg", exif: "Camera // Standard" },
+    { id: 101, title: "IMG_20210417_182921", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/IMG_20210417_182921.jpg", exif: "Camera // Standard" },
+    { id: 102, title: "IMG_20210417_183023", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/IMG_20210417_183023.jpg", exif: "Camera // Standard" },
+    { id: 103, title: "IMG20201114063311", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/IMG20201114063311.jpg", exif: "realme X2 Pro // 5mm // f/1.8 // ISO 100" },
+    { id: 104, title: "IMG20201114194146", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/IMG20201114194146.jpg", exif: "Camera // Standard" },
+    { id: 105, title: "IMG20201223175909", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/IMG20201223175909.jpg", exif: "realme X2 Pro // 5mm // f/1.8 // ISO 100" },
+   // { id: 106, title: "IMG20210123064020", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/IMG20210123064020.jpg", exif: "Camera // Standard" },
+    //{ id: 107, title: "IMG20210203070010", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/IMG20210203070010.jpg", exif: "realme X2 Pro // 5mm // f/1.8 // ISO 100" },
+    { id: 108, title: "DSC_0040", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_0040.jpg", exif: "realme X2 Pro // 5mm // f/1.8 // ISO 100" },
+    { id: 109, title: "IMG20220411170811", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/v1779678645/DSC_1053.jpg", exif: "realme X2 Pro // 5mm // f/1.8 // ISO 100" },
+    { id: 110, title: "IMG20220701183830", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/IMG20220701183830.jpg", exif: "realme X2 Pro // 5mm // f/1.8 // ISO 391" },
+    { id: 111, title: "IMG20240616153420", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/IMG20240616153420.jpg", exif: "OnePlus 11R 5G // 5mm // f/1.8 // ISO 50" },
+    { id: 112, title: "IMG20240726171231", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/IMG20240726171231.jpg", exif: "OnePlus 11R 5G // 5mm // f/1.8 // ISO 50" },
+    { id: 113, title: "IMG20240808154012", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/IMG20240808154012.jpg", exif: "OnePlus 11R 5G // 5mm // f/1.8 // ISO 50" },
+    { id: 114, title: "IMG20250324092849", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/IMG20250324092849.jpg", exif: "Camera // Standard" },
+    { id: 115, title: "IMG20250324103835", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/IMG20250324103835.jpg", exif: "Camera // Standard" },
+    { id: 116, title: "IMG20250324140617", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/IMG20250324140617.jpg", exif: "Camera // Standard" },
+    { id: 117, title: "IMG20250325100127", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/IMG20250325100127.jpg", exif: "OnePlus 11R 5G // 5mm // f/1.8 // ISO 50" },
+    { id: 118, title: "DSC01112", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC01112.jpg", exif: "Camera // Standard" },
+    { id: 119, title: "DSC_0281", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_0281.jpg", exif: "Camera // Standard" },
+    { id: 120, title: "DSC02403", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC02403.jpg", exif: "Camera // Standard" },
+    { id: 121, title: "DSC_0721", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_0721.jpg", exif: "Camera // Standard" },
+    { id: 122, title: "DSC01425", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC01425.jpg", exif: "Camera // Standard" },
+    { id: 123, title: "IMG20230322215351", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/IMG20230322215351.jpg", exif: "Camera // Standard" },
+    { id: 124, title: "DSC_0714", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_0714.jpg", exif: "Camera // Standard" },
+    //{ id: 125, title: "DSC01235 -r", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC01235-r.jpg", exif: "Camera // Standard" },
+    { id: 126, title: "IMG_20211101_062722", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/IMG_20211101_062722.jpg", exif: "Camera // Standard" },
+    { id: 127, title: "DSC_0605", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_0605.jpg", exif: "Camera // Standard" },
+    { id: 128, title: "IMG20230507164151", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/IMG20230507164151.jpg", exif: "Camera // Standard" },
+    { id: 129, title: "DSC_1237", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_1237.jpg", exif: "Camera // Standard" },
+    { id: 130, title: "DSC_1232", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_1232.jpg", exif: "Camera // Standard" },
+    { id: 131, title: "IMG20250326105054", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/IMG20250326105054.jpg", exif: "Camera // Standard" },
+    { id: 132, title: "IMG20250325152507", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/IMG20250325152507.jpg", exif: "Camera // Standard" },
+    { id: 133, title: "IMG20231024050601", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/IMG20231024050601.jpg", exif: "Camera // Standard" },
+    { id: 134, title: "DSC_0525", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_0525.jpg", exif: "Camera // Standard" },
+    { id: 135, title: "IMG20250325135145", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/IMG20250325135145.jpg", exif: "Camera // Standard" },
+    { id: 136, title: "DSC_0209", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_0209.jpg", exif: "Camera // Standard" },
+   // { id: 137, title: "DSC01410 -r", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC01410 -r.jpg", exif: "Camera // Standard" },
+    { id: 138, title: "DSC_0720", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_0720.jpg", exif: "Camera // Standard" },
+    { id: 139, title: "DSC02294", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC02294.jpg", exif: "Camera // Standard" },
+    { id: 140, title: "IMG20250325140332", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/IMG20250325140332.jpg", exif: "Camera // Standard" },
+    { id: 141, title: "IMG20211016094721", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/IMG20211016094721.jpg", exif: "Camera // Standard" },
+    //{ id: 142, title: "DSC_0612", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_0612.jpg", exif: "Camera // Standard" },
+    { id: 143, title: "IMG20250326105519", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/IMG20250326105519.jpg", exif: "Camera // Standard" },
+    { id: 144, title: "IMG20250325140228", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/IMG20250325140228.jpg", exif: "Camera // Standard" },
+    { id: 145, title: "DSC02391", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC02391.jpg", exif: "Camera // Standard" },
+    { id: 146, title: "IMG20250325142059", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/IMG20250325142059.jpg", exif: "Camera // Standard" },
+    { id: 147, title: "DSC02313", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC02313.jpg", exif: "Camera // Standard" },
+    { id: 148, title: "IMG20230507091033", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/IMG20230507091033.jpg", exif: "Camera // Standard" },
+    { id: 149, title: "DSC_0613", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_0613.jpg", exif: "Camera // Standard" },
+    { id: 150, title: "DSC01229", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC01229.jpg", exif: "Camera // Standard" },
+    { id: 151, title: "DSC02396", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC02396.jpg", exif: "Camera // Standard" },
+    { id: 152, title: "DSC01421-r", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC01421-r.jpg", exif: "Camera // Standard" },
+    { id: 153, title: "DSC_0704", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_0704.jpg", exif: "Camera // Standard" },
+    { id: 154, title: "DSC_0051", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_0051.jpg", exif: "Camera // Standard" },
+    { id: 155, title: "IMG20250327175433", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/IMG20250327175433.jpg", exif: "Camera // Standard" },
+    { id: 156, title: "DSC_0721", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_0721.jpg", exif: "Camera // Standard" },
+    { id: 157, title: "IMG20250326184324", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/IMG20250326184324.jpg", exif: "Camera // Standard" },
+    { id: 158, title: "DSC_0204", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_0204.jpg", exif: "NIKON D5600 // 300mm // f/6.3 // ISO 2000" },
+    //{ id: 159, title: "IMG20210203070010", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/IMG20210203070010.jpg", exif: "realme X2 Pro // 5mm // f/1.8 // ISO 100" },
+    { id: 160, title: "DSC_0634.png", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/v1779678740/DSC_0634.png", exif: "Camera // Standard" },
+    { id: 161, title: "DSC_0342", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_0342.jpg", exif: "Camera // Standard" },
+    { id: 162, title: "IMG20220701183830", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/IMG20220701183830.jpg", exif: "realme X2 Pro // 5mm // f/1.8 // ISO 391" },
+    { id: 163, title: "DSC_0232", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_0232.jpg", exif: "NIKON D5600 // 300mm // f/6.3 // ISO 360" },
+    { id: 164, title: "DSC_1221", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_1221.jpg", exif: "Camera // Standard" },
+    { id: 165, title: "DSC_0097", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_0097.jpg", exif: "Camera // Standard" },
+    { id: 166, title: "IMG20250326105519", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/IMG20250326105519.jpg", exif: "Camera // Standard" },
+    { id: 167, title: "DSC_1748", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_1748.jpg", exif: "NIKON D5600 // 300mm // f/6.3 // ISO 900" },
+    { id: 168, title: "IMG20231024051019", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/IMG20231024051019.jpg", exif: "OnePlus 11R 5G // 5mm // f/1.8 // ISO 1250" },
+    { id: 169, title: "DSC02403", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC02403.jpg", exif: "Camera // Standard" },
+    { id: 170, title: "DSC02317", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC02317.jpg", exif: "Camera // Standard" },
+    { id: 171, title: "IMG20230817205436", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/IMG20230817205436.jpg", exif: "OnePlus 11R 5G // 5mm // f/1.8 // ISO 500" },
+    { id: 172, title: "DSC_0991", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_0991.jpg", exif: "NIKON D5600 // 100mm // f/11.0 // ISO 400" },
+    { id: 173, title: "DSC01191", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC01191.jpg", exif: "Camera // Standard" },
+    { id: 174, title: "DSC02294", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC02294.jpg", exif: "Camera // Standard" },
+    { id: 175, title: "DSC_0069", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_0069.jpg", exif: "Camera // Standard" },
+    { id: 176, title: "DSC_0025", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_0025.jpg", exif: "Camera // Standard" },
+    { id: 177, title: "DSC01113", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC01113.jpg", exif: "Camera // Standard" },
+    { id: 178, title: "DSC_0118", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_0118.jpg", exif: "NIKON D5600 // 300mm // f/6.3 // ISO 450" },
+    { id: 179, title: "DSC02396", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC02396.jpg", exif: "Camera // Standard" },
+    { id: 180, title: "DSC01421-r", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC01421-r.jpg", exif: "Camera // Standard" },
+    { id: 181, title: "DSC_1059", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_1059.jpg", exif: "Camera // Standard" },
+    { id: 182, title: "IMG20250325152507", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/IMG20250325152507.jpg", exif: "Camera // Standard" },
+    { id: 183, title: "IMG20231024050601", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/IMG20231024050601.jpg", exif: "Camera // Standard" },
+    { id: 184, title: "DSC_0525", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_0525.jpg", exif: "Camera // Standard" },
+    { id: 185, title: "IMG20250325135145", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/IMG20250325135145.jpg", exif: "Camera // Standard" },
+    { id: 186, title: "DSC_0209", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_0209.jpg", exif: "Camera // Standard" },
+    //{ id: 187, title: "DSC01410 -r", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC01410-r.jpg", exif: "Camera // Standard" },
+    { id: 188, title: "DSC_0720", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_0720.jpg", exif: "Camera // Standard" },
+    { id: 189, title: "DSC02294", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC02294.jpg", exif: "Camera // Standard" },
+    { id: 190, title: "IMG20250325140332", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/v1779678645/DSC_1053.jpg", exif: "Camera // Standard" },
+    { id: 191, title: "IMG20211016094721", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/IMG20211016094721.jpg", exif: "Camera // Standard" },
+    { id: 192, title: "IMG20210203070010", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/IMG20210203070010.jpg", exif: "Camera // Standard" },
+    { id: 193, title: "IMG20250326105519", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/IMG20250326105519.jpg", exif: "Camera // Standard" },
+    { id: 194, title: "IMG20250325140228", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/IMG20250325140228.jpg", exif: "Camera // Standard" },
+    { id: 195, title: "DSC02391", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC02391.jpg", exif: "Camera // Standard" },
+    { id: 196, title: "IMG20250325142059", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/IMG20250325142059.jpg", exif: "Camera // Standard" },
+    { id: 197, title: "DSC02313", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC02313.jpg", exif: "Camera // Standard" },
+    { id: 198, title: "IMG20230507091033", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/IMG20230507091033.jpg", exif: "Camera // Standard" },
+    { id: 199, title: "DSC_0613", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_0613.jpg", exif: "Camera // Standard" },
+    { id: 200, title: "DSC01229", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC01229.jpg", exif: "Camera // Standard" },
+    { id: 201, title: "DSC02396", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC02396.jpg", exif: "Camera // Standard" },
+    { id: 202, title: "DSC01421-r", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC01421-r.jpg", exif: "Camera // Standard" },
+    { id: 203, title: "DSC_0704", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_0704.jpg", exif: "Camera // Standard" },
+    { id: 204, title: "DSC_0051", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_0051.jpg", exif: "Camera // Standard" },
+    { id: 205, title: "IMG20250327175433", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/IMG20250327175433.jpg", exif: "Camera // Standard" },
+    { id: 206, title: "DSC_0721", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_0721.jpg", exif: "Camera // Standard" },
+    { id: 207, title: "IMG20250326184324", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/IMG20250326184324.jpg", exif: "Camera // Standard" },
+    { id: 208, title: "DSC_0204", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_0204.jpg", exif: "NIKON D5600 // 300mm // f/6.3 // ISO 2000" },
+    { id: 209, title: "IMG20210203070010", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/IMG20210203070010.jpg", exif: "realme X2 Pro // 5mm // f/1.8 // ISO 100" },
+    { id: 210, title: "DSC_0635", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/v1779678735/DSC_0635.jpg", exif: "Camera // Standard" },
+    { id: 211, title: "DSC_0342", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/DSC_0342.jpg", exif: "Camera // Standard" },
+    { id: 212, title: "IMG20220701183830", url: "https://res.cloudinary.com/dbwbncxmh/image/upload/w_800,c_scale,q_auto/IMG20220701183830.jpg", exif: "realme X2 Pro // 5mm // f/1.8 // ISO 391" }
+];
+
+// ─── ADD YOUR CLOUD MP3 FILES HERE ───
+        // IMPORTANT: Ensure your Dropbox links end in ?raw=1
+        const myPlaylist = [
+            { id: 0, title: "E Bhabe Golpo Hok Full Audio Song Bibaho Diaries Bengali Movie 2017", source: "https://www.dropbox.com/scl/fi/7tavqgg6zq8dgsc14bihr/E-Bhabe-Golpo-Hok-Full-Audio-Song-Bibaho-Diaries-Bengali-Movie-2017.mp3?rlkey=wueb0iiaf0y7fp832qkqly86m&raw=1" },
+            { id: 1, title: "Aaoge Tum Kabhi", source: "https://www.dropbox.com/scl/fi/7eh4f3g4arrfjahl47fcm/Aaoge-Tum-Kabhi.mp3?rlkey=h9std9y0wxkm5ftgxexlsn4oa&raw=1" },
+            { id: 2, title: "Aasmani", source: "https://www.dropbox.com/scl/fi/uv9s5l3po9iz3zbpet9jt/Aasmani.mp3?rlkey=xyjuxqpm2iktfi1ohnq3of1kh&raw=1" },
+            { id: 3, title: "Aayat Song Bajirao Mastani", source: "https://www.dropbox.com/scl/fi/xu7vsqwkmom4mtlnm0rhu/Aayat-Song-Bajirao-Mastani.mp3?rlkey=z9gp2hhwlfbbbmlvzwupa62lf&raw=1" },
+            { id: 4, title: "Anuv Jain X Lost Stories Arz Kiya Hai - Coke Studio Bharat", source: "https://www.dropbox.com/scl/fi/sfad3yh0vhtsyywtmczck/Anuv-Jain-X-Lost-Stories-Arz-Kiya-Hai-Coke-Studio-Bharat.mp3?rlkey=41597fkkodgq3e1j0fw6o55en&raw=1" },
+            { id: 5, title: "Archer Marsh Give Me Everything", source: "https://www.dropbox.com/scl/fi/hgqnwpaglf1ooj1fslwnx/Archer-Marsh-Give-Me-Everything.mp3?rlkey=9syiufnsurb7lichsp1yjjgd9&raw=1" },
+            { id: 6, title: "Beer Song From Diesel", source: "https://www.dropbox.com/scl/fi/vvts82soc95rfakyek6rp/Beer-Song-From-Diesel.mp3?rlkey=s5e82re2n2v81apr783ihjpwe&raw=1" },
+            { id: 7, title: "Bin Tere - I Hate Luv Storys", source: "https://www.dropbox.com/scl/fi/v2l7s1q28se71f83fcuf3/Bin-Tere-I-Hate-Luv-Storys.mp3?rlkey=ksyafz641flsn63wr27y2nj8c&raw=1" },
+            { id: 8, title: "Deewaana Deewaana - Tere Ishk Mein Dhanush Kriti AR Rahman Aanand LR Bhushan K", source: "https://www.dropbox.com/scl/fi/azzdppehtltyb1cp6v9lk/Deewaana-Deewaana-Tere-Ishk-Mein-Dhanush-Kriti-AR-Rahman-Aanand-LR-Bhushan-K.mp3?rlkey=ckovt7yc78q83r5qpu7z3ss7d&raw=1" },
+            { id: 9, title: "Dheema", source: "https://www.dropbox.com/scl/fi/428vj1o1n4gyd9toh3pht/Dheema.mp3?rlkey=hqobcbq5alfq42k5pv4isxe10&raw=1" },
+            { id: 10, title: "Dhokha Dhadi R Rajkumar Shahid Kapoor & Sonakshi Sinha", source: "https://www.dropbox.com/scl/fi/odpahurg9qk6x2kso0fpq/Dhokha-Dhadi-R-Rajkumar-Shahid-Kapoor-Sonakshi-Sinha.mp3?rlkey=msqu8kf0jxp5lulz8zpard1lv&raw=1" },
+            { id: 11, title: "Dil Ka Jo Haal Hai -Besharam Ranbir Kapoor Abhijeet Bhattacharya Shreya Ghoshal", source: "https://www.dropbox.com/scl/fi/n5llilxyhfhlog5usstvy/Dil-Ka-Jo-Haal-Hai-Besharam-Ranbir-Kapoor-Abhijeet-Bhattacharya-Shreya-Ghoshal.mp3?rlkey=e5ny5ckev4sjowgs9fwn3is6y&raw=1" },
+            { id: 12, title: "Dooriyan - Love Aaj Kal Saif Ali Khan, Deepika Padukone", source: "https://www.dropbox.com/scl/fi/4jy68hbpuwi2170dkcksr/Dooriyan-Love-Aaj-Kal-Saif-Ali-Khan-Deepika-Padukone.mp3?rlkey=4sr2jpjble7hzlkt4ubhv4wfh&raw=1" },
+            { id: 13, title: "Dooron Dooron", source: "https://www.dropbox.com/scl/fi/npq0e0pm3rzf3bk5g3mtm/Dooron-Dooron.mp3?rlkey=jx9pj39djyhlquaf9kaz3zuk2&raw=1" },
+            { id: 14, title: "Ek Je Chhilo Raja Anup Ghoshal,", source: "https://www.dropbox.com/scl/fi/aoso9t097sjlp7ufr0fjz/Ek-Je-Chhilo-Raja-Anup-Ghoshal.mp3?rlkey=16gond01i9xclw4yq0wrblcyi&raw=1" },
+            { id: 15, title: "Falak Tak From Tashan", source: "https://www.dropbox.com/scl/fi/cdkj80s82h0zn15ye2rto/Falak-Tak-From-Tashan.mp3?rlkey=yd231jnd2w5s00z2gsxc17wop&raw=1" },
+            { id: 16, title: "Faster Car - Loving caliber", source: "https://www.dropbox.com/scl/fi/ym0yog17jefdg7f11yv3d/Faster-Car-Loving-caliber.mp3?rlkey=ba204o4uisk509rab0u6t59hz&raw=1" },
+            { id: 17, title: "Haule Haule - Rab Ne Bana Di Jodi Shah Rukh Khan Anushka Sharma Sukhwinder Singh", source: "https://www.dropbox.com/scl/fi/hu90w28eyxslmfmxseuzi/Haule-Haule-Rab-Ne-Bana-Di-Jodi-Shah-Rukh-Khan-Anushka-Sharma-Sukhwinder-Singh.mp3?rlkey=wnfpq5pa6uppiqw77jcey4ay0&raw=1" },
+            { id: 18, title: "Hua Hain Aaj Pehli Baar", source: "https://www.dropbox.com/scl/fi/0s62e6vxz28kdvmetcab7/Hua-Hain-Aaj-Pehli-Baar.mp3?rlkey=3q1k4qa1ni7sik1ndxmcptdly&raw=1" },
+            { id: 19, title: "IJAZAT Song ONE NIGHT STAND Sunny Leone, Tanuj Virwani Arijit Singh, Meet Bros T-Series", source: "https://www.dropbox.com/scl/fi/tv19ln0z6u1t4n6468adp/IJAZAT-Song-ONE-NIGHT-STAND-Sunny-Leone-Tanuj-Virwani-Arijit-Singh-Meet-Bros-T-Series.mp3?rlkey=fw735xc9tqc72yq80yymy4vwl&raw=1" },
+            { id: 20, title: "Itni Si Baat Hain", source: "https://www.dropbox.com/scl/fi/orgoybwsh27shkl870pws/Itni-Si-Baat-Hain.mp3?rlkey=61o2kapyt9tci8iw6jk8y8kq2&raw=1" },
+            { id: 21, title: "JAO PAKHI BOLO", source: "https://www.dropbox.com/scl/fi/ifrvxwab4ra7rk26wve4w/JAO-PAKHI-BOLO.mp3?rlkey=az93zrs3lthkadrba45apqmyx&raw=1" },
+            { id: 22, title: "Jeene Laga HoonRamaiya Vastavaiya Girish Kumar Shruti Haasan Atif Aslam Shreya Ghoshal", source: "https://www.dropbox.com/scl/fi/4zmgivfj9rf88yxospps6/Jeene Laga HoonRamaiya Vastavaiya Girish Kumar Shruti Haasan Atif Aslam Shreya Ghoshal.mp3?rlkey=dowcewmgjvrecghc7cmd3xrdm&raw=1" },
+            { id: 23, title: "Kate Bush- Running Up That Hill", source: "https://www.dropbox.com/scl/fi/8gppb1vy4e4bdhyec6lfv/Kate-Bush-Running-Up-That-Hill.mp3?rlkey=68cu3z4l1pt54jnzdohjiu3ze&raw=1" },
+            { id: 24, title: "Kithe Reh Gaya", source: "https://www.dropbox.com/scl/fi/11lisnkqgwuy3dms12ng7/Kithe-Reh-Gaya.mp3?rlkey=kz6jgtnw32ykee30zazgclo8h&raw=1" },
+            { id: 25, title: "KOI TUMSA NAHIN", source: "https://www.dropbox.com/scl/fi/kwkadzsn4h9t4sdnpwgf5/KOI-TUMSA-NAHIN.mp3?rlkey=j4jhufziwesi7ubnnyk8udz40&raw=1" },
+            { id: 26, title: "Kudmayi-Rocky Aur Rani Kii Prem Kahaani Ranveer Alia Shahid Pritam Amitabh", source: "https://www.dropbox.com/scl/fi/1r28txlonotfpgtv6n331/Kudmayi-Rocky-Aur-Rani-Kii-Prem-Kahaani-Ranveer-Alia-Shahid-Pritam-Amitabh.mp3?rlkey=onq2t5pelczj4dsxb49rh0buc&raw=1" },
+            { id: 27, title: "Lamha Lamha Music -Aspirants", source: "https://www.dropbox.com/scl/fi/9ec4c1rjbfuohifu6a2ud/Lamha-Lamha-Music-Aspirants.mp3?rlkey=9hz1mkk0znyw0ovlxtx8kuv4p&raw=1" },
+            { id: 28, title: "Majboor -Sheheryar Rehan", source: "https://www.dropbox.com/scl/fi/tasi6eq64zwsa3alxod79/Majboor-Sheheryar-Rehan.mp3?rlkey=06ackk9t103n5iy252el8bhce&raw=1" },
+            { id: 29, title: "Maroon 5 - Payphone ft. Wiz Khalifa", source: "https://www.dropbox.com/scl/fi/cvrfz88me4p9q4a7vdesf/Maroon-5-Payphone-ft.-Wiz-Khalifa.mp3?rlkey=06razjf475tbnr7umsoav8qpx&raw=1" },
+            { id: 30, title: "Mon - Cactus", source: "https://www.dropbox.com/scl/fi/cgshnrfvejwea0qsmyyar/Mon-Cactus.mp3?rlkey=g0cxavzf9ykqd4lojxvqe7bt1&raw=1" },
+            { id: 31, title: "Queen Bohemian Rhapsody", source: "https://www.dropbox.com/scl/fi/8nd9t971lx1h519n215s7/Queen-Bohemian-Rhapsody.mp3?rlkey=7dgvauwc43qmo85p1zjugcvsk&raw=1" },
+            { id: 32, title: "Saahel - Man Chala", source: "https://www.dropbox.com/scl/fi/kmlhqqyr3gdu6xdog044d/Saahel-Man-Chala.mp3?rlkey=7i218x1xlcoskgdf7ha6gqnl2&raw=1" },
+            { id: 33, title: "Saathiya Singham Ajay Devgan, Kajal Aggarwal", source: "https://www.dropbox.com/scl/fi/u8dh7gsd1adjpoixggle8/Saathiya-Singham-Ajay-Devgan-Kajal-Aggarwal.mp3?rlkey=esor7mkkkr9ih135ebf29maqx&raw=1" },
+            { id: 34, title: "Safar", source: "https://www.dropbox.com/scl/fi/6d91hycgki35ro8vx1ogf/Safar.mp3?rlkey=6mk2olqqokr4eb9zttwj52mll&raw=1" },
+            { id: 35, title: "SAJDE", source: "https://www.dropbox.com/scl/fi/aj6uxwg5t8iqqxh8zfcv0/SAJDE.mp3?rlkey=gkhvjnmzcaf1inuj3i7fov13g&raw=1" },
+            { id: 36, title: "Slipping Through My Fingers", source: "https://www.dropbox.com/scl/fi/stflckjhwhyvxe17osi9l/Slipping-Through-My-Fingers.mp3?rlkey=lb4t92ony9zw33ajxp0ts0qn3&raw=1" },
+            { id: 37, title: "Tere Bin Nahi Laage Male Version", source: "https://www.dropbox.com/scl/fi/2x3f2bj9zy9hye2cj9tbs/Tere-Bin-Nahi-Laage-Male-Version.mp3?rlkey=5al7zlgbtmzdv1g9r81bduk7w&raw=1" },
+            { id: 38, title: "Teri Meri Prem Kahani Bodyguard", source: "https://www.dropbox.com/scl/fi/j5fatodyw1alhvq331oty/Teri-Meri-Prem-Kahani-Bodyguard.mp3?rlkey=gh7puzwdaolwf4ok4r8ff83l7&raw=1" },
+            { id: 39, title: "The Chainsmokers Hope ft.Winona Oak", source: "https://www.dropbox.com/scl/fi/gn3qjmma0zvhjw25t8jel/The-Chainsmokers-Hope-ft.Winona-Oak.mp3?rlkey=btpwqjvrvcu2zf79j6reux2hv&raw=1" },
+            { id: 40, title: "Tujh Mein Rab Dikhta Hai Rab Ne Bana Di Jodi Shah Rukh Khan, Anushka Sharma Roop Kumar", source: "https://www.dropbox.com/scl/fi/1ilc32zhcu3uon7upfb6s/Tujh-Mein-Rab-Dikhta-Hai-Rab-Ne-Bana-Di-Jodi-Shah-Rukh-Khan-Anushka-Sharma-Roop-Kumar.mp3?rlkey=hn5ipyleiaj9xyqil8w7jjxem&raw=1" },
+            { id: 41, title: "Tum Hi Ho Aashiqui 2", source: "https://www.dropbox.com/scl/fi/c9w434eyhctxl8d52fx86/Tum-Hi-Ho-Aashiqui-2.mp3?rlkey=nkxqdzby47ma1u63phdwz0y7o&raw=1" },
+            { id: 42, title: "Tum Ho Toh -Saiyaara", source: "https://www.dropbox.com/scl/fi/gngd7uet5cd0gbyn9ms0a/Tum-Ho-Toh-Saiyaara.mp3?rlkey=ksox7u5r9yvzka72xlarj04bx&raw=1" },
+            { id: 43, title: "Uska Hi Banana 1920 Evil Returns Arijit Singh Aftab Shivdasani, Tia Bajpai", source: "https://www.dropbox.com/scl/fi/qdjh9mwf0mxiqnufet43j/Uska-Hi-Banana-1920-Evil-Returns-Arijit-Singh-Aftab-Shivdasani-Tia-Bajpai.mp3?rlkey=j6c1bcj28qzijhdqoz6no6v53&raw=1" }
+        ];
+        function runScrollObserver() {
+            const items = document.querySelectorAll('.reveal-on-scroll');
+            const observer = new IntersectionObserver((entries, self) => {
+                entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('visible'); self.unobserve(entry.target); } });
+            }, { threshold: 0.02 });
+            items.forEach(item => observer.observe(item));
+        }
+        let isDarkTheme = true;
+        function toggleGalleryTheme() {
+            isDarkTheme = !isDarkTheme;
+            document.body.classList.toggle('light-theme', !isDarkTheme);
+            const themeText = document.getElementById('theme-text');
+            if (themeText) {
+                themeText.innerText = isDarkTheme ? 'Darkroom' : 'Daylight';
+            }
+        }
+
+        // ─── GENERATE INTERACTIVE CARDS ENGINE ───
+function buildGalleryGrid() {
+    const gridContainer = document.getElementById('dynamic-masonry-grid'); 
+    gridContainer.innerHTML = "";
+    
+    myImagesCollection.forEach(photo => {
+        const itemCard = document.createElement('div');
+        itemCard.className = 'masonry-card-item reveal-on-scroll rounded-sm overflow-hidden flex flex-col group relative';
+        
+        itemCard.innerHTML = `
+            <div ondblclick="triggerDoubleTapLike(this, ${photo.id})" onclick="launchFocusedView('${photo.url}', '${photo.exif}')" class="img-trigger relative overflow-hidden bg-neutral-900 aspect-auto">
+                <img src="${photo.url}" alt="${photo.title}" class="w-full h-auto object-cover transform transition-transform duration-700 ease-out group-hover:scale-105 pointer-events-none">
+                
+                <div class="heart-flash absolute inset-0 flex items-center justify-center bg-black/20 opacity-0 pointer-events-none transition-all duration-300 scale-50">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-amber-400 fill-current" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.5 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                </div>
+            </div>
+            
+            <div class="p-4 flex flex-col gap-3 border-t border-neutral-900/40 bg-neutral-950/20 backdrop-blur-xs font-mono text-[11px]">
+                <div class="flex items-center justify-between text-neutral-400">
+                    <span class="uppercase tracking-wide text-[10px] text-neutral-500 truncate max-w-[150px]">${photo.title}</span>
+                    <div class="flex gap-4 items-center">
+                        <button onclick="triggerGlobalLike(event, ${photo.id})" class="action-btn flex items-center gap-1 hover:text-amber-400 smooth-glow cursor-pointer">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 fill-none stroke-current" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+    <span id="like-count-${photo.id}">0</span>
+</button>
+                       <button onclick="event.stopPropagation(); loadAndOpenComments(${photo.id})" class="action-btn flex items-center gap-1 hover:text-white smooth-glow cursor-pointer">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 fill-none stroke-current" viewBox="0 0 24 24" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+    </svg>
+    <span id="comment-count-${photo.id}">0</span> 
+    <span class="text-[8px] opacity-60">COMMENTS</span>
+</button>
+                    </div>
+                </div>
+                
+                <p class="card-exif text-[9px] text-neutral-500 opacity-80 uppercase tracking-widest">${photo.exif}</p>
+                
+                <div id="latest-comment-${photo.id}" class="text-neutral-400 border-t border-neutral-900/20 pt-2 hidden"></div>
+            </div>
+        `;
+        
+        gridContainer.appendChild(itemCard);
+        refreshCardComment(photo.id); // Triggers the visual update for comments
+    });
+    
+    runScrollObserver(); 
+    setupLensInteractions();
+}
+
+        let activeCommentPhotoId = null;
+        function launchCommentsDrawer(photoId) {
+            activeCommentPhotoId = photoId;
+            const photo = myImagesCollection.find(p => p.id === photoId); if(!photo) return;
+            const feed = document.getElementById('drawer-comments-feed'); feed.innerHTML = "";
+            
+            if(!photo.comments || photo.comments.length === 0) {
+                feed.innerHTML = `<div class="text-neutral-600 italic uppercase text-[10px] tracking-widest mt-4">No observations logged yet.</div>`;
+            } else {
+                photo.comments.forEach(c => {
+                    feed.innerHTML += `<div class="border-b border-neutral-900 pb-2"><span class="text-neutral-500 font-bold block mb-0.5">Anonymous Guest //</span>"${c}"</div>`;
+                });
+            }
+            toggleCommentsDrawer(true);
+            
+        }
+   async function submitNewCardComment() {
+    const field = document.getElementById('new-comment-field');
+    const text = field.value.trim();
+    const username = localStorage.getItem('portfolioUser') || 'Anonymous'; 
+
+    if (text === "" || activeCommentPhotoId === null) return;
+
+    // Notice we use db.from here!
+    const { error } = await db
+        .from('comments')
+        .insert([{ 
+            photo_id: activeCommentPhotoId.toString(), 
+            text: text,
+            username: username 
+        }]);
+
+    if (!error) {
+        field.value = "";
+        launchCommentsDrawer(activeCommentPhotoId); 
+        refreshCardComment(activeCommentPhotoId);
+        loadGlobalStats(); 
+    }
+}
+async function refreshCardComment(photoId) {
+    // Notice we use db.from here!
+    const { data } = await db
+        .from('comments')
+        .select('username, text')
+        .eq('photo_id', photoId.toString())
+        .order('created_at', { ascending: false })
+        .limit(1); 
+
+    const container = document.getElementById(`latest-comment-${photoId}`);
+    if (container && data && data.length > 0) {
+        container.classList.remove('hidden'); 
+        container.innerHTML = `<span class="text-amber-500 font-bold">${data[0].username.toUpperCase()}:</span> ${data[0].text}`;
+    }
+}
+        function toggleCommentsDrawer(open) {
+            const el = document.getElementById('comments-drawer');
+            if(open) { el.classList.remove('hidden'); setTimeout(() => el.classList.remove('translate-x-full'), 20); }
+            else { el.classList.add('translate-x-full'); setTimeout(() => el.classList.add('hidden'), 500); }
+        }
+
+        // --- GLOBAL WINDOW DISPLAY MODALS ---
+        function launchFocusedView(src, text) {
+            const f = document.getElementById('focused-image-frame'); f.src = src; document.getElementById('exif-overlay-strip').innerText = text;
+            const overlay = document.getElementById('focus-overlay'); overlay.classList.remove('hidden'); overlay.classList.add('flex');
+            setTimeout(() => overlay.classList.remove('opacity-0'), 20);
+        }
+        function dismissFocusedView() {
+            document.getElementById('focus-overlay').classList.add('opacity-0');
+            setTimeout(() => document.getElementById('focus-overlay').classList.add('hidden'), 300);
+        }
+
+        function toggleAboutModal(open) {
+            const el = document.getElementById('about-overlay');
+            if(open) {
+                el.classList.remove('hidden'); el.classList.add('flex'); 
+                document.body.style.overflow = 'hidden';
+                setTimeout(() => el.classList.remove('opacity-0'), 20); 
+            } else {
+                el.classList.add('opacity-0'); 
+                document.body.style.overflow = '';
+                setTimeout(() => { el.classList.remove('flex'); el.classList.add('hidden'); }, 300); 
+            }
+        }
+
+        function toggleGamesModal(open) {
+            const el = document.getElementById('games-overlay'); const box = el.querySelector('div');
+            if (open) {
+                el.classList.remove('hidden'); el.classList.add('flex');
+                setTimeout(() => { el.classList.remove('opacity-0'); box.classList.remove('scale-95'); box.classList.add('scale-100'); }, 20);
+                switchGameMode('snake'); 
+            } else {
+                stopSnakeGameLoop(); el.classList.add('opacity-0'); box.classList.remove('scale-100'); box.classList.add('scale-95');
+                setTimeout(() => { el.classList.remove('flex'); el.classList.add('hidden'); }, 300);
+            }
+        }
+
+        // ─── SPECIAL TAB MODAL NAVIGATION ───
+        function toggleSpecialTabModal(open) {
+            const el = document.getElementById('special-tab-overlay');
+            if (open) {
+                el.classList.remove('hidden'); el.classList.add('flex');
+                document.body.style.overflow = 'hidden';
+                
+                document.getElementById('vaultPass').value = '';
+                document.getElementById('errorHint').style.opacity = "0";
+                document.getElementById('vaultGate').style.opacity = '1';
+                document.getElementById('vaultGate').style.visibility = 'visible';
+                document.getElementById('welcomeOverlay').style.opacity = '0';
+                document.getElementById('welcomeOverlay').style.visibility = 'hidden';
+                document.getElementById('timerHeart').classList.remove('center-stage', 'corner-docked');
+                document.getElementById('vaultContent').style.visibility = 'hidden';
+                document.getElementById('vaultContent').style.opacity = '0';
+                document.querySelectorAll('.vault-photo-card').forEach(c => c.classList.remove('stagger-entrance'));
+                
+                setTimeout(() => el.classList.remove('opacity-0'), 20);
+            } else {
+                el.classList.add('opacity-0');
+                document.body.style.overflow = '';
+                setTimeout(() => { el.classList.remove('flex'); el.classList.add('hidden'); }, 300);
+            }
+        }
+
+        function switchGameMode(mode) {
+            stopSnakeGameLoop(); const tabs = ['tictactoe', 'sudoku', 'snake'];
+            tabs.forEach(t => {
+                const button = document.getElementById(`tab-${t}`); const view = document.getElementById(`game-${t}-viewport`);
+                if (t === mode) { button.className = "text-amber-600 font-bold border-b-2 border-amber-500 pb-1.5 smooth-glow cursor-pointer"; view.classList.remove('hidden'); }
+                else { button.className = "text-neutral-400 hover:text-neutral-900 smooth-glow pb-1.5 cursor-pointer"; view.classList.add('hidden'); }
+            });
+            if (mode === 'tictactoe') resetTTT();
+            if (mode === 'sudoku') generateNewSudoku9x9();
+            if (mode === 'snake') prepareSnakeBoard();
+            setupLensInteractions();
+        }
+
+        // PLAYER VS COMPUTER TIC-TAC-TOE ENGINE
+        let tttBoard = ["", "", "", "", "", "", "", "", ""]; let tttActive = true;
+        function makeTTTMove(index) {
+            if (tttBoard[index] !== "" || !tttActive) return;
+            executeMove(index, "X", "#b45309"); if (checkTTTGameStatus("X")) return;
+            document.getElementById('ttt-status').innerText = "Shirsendu is thinking..."; tttActive = false;
+            setTimeout(() => { const aiIndex = calculateAICounterMove(); if (aiIndex !== null) { executeMove(aiIndex, "O", "#1c1917"); checkTTTGameStatus("O"); } }, 400);
+        }
+        function executeMove(idx, sign, colorHex) { tttBoard[idx] = sign; const cells = document.querySelectorAll('.ttt-cell'); cells[idx].innerText = sign; cells[idx].style.color = colorHex; }
+        function calculateAICounterMove() {
+            const wins = [[0,1,2], [3,4,5], [6,7,8], [0,3,6], [1,4,7], [2,5,8], [0,4,8], [2,4,6]];
+            for (let c of wins) { const pCells = c.filter(i => tttBoard[i] === "X"); const empty = c.filter(i => tttBoard[i] === ""); if (pCells.length === 2 && empty.length === 1) return empty[0]; }
+            if (tttBoard[4] === "") return 4; const open = tttBoard.map((val, i) => val === "" ? i : null).filter(v => v !== null); return open.length > 0 ? open[Math.floor(Math.random() * open.length)] : null;
+        }
+        function checkTTTGameStatus(sign) {
+            const wins = [[0,1,2], [3,4,5], [6,7,8], [0,3,6], [1,4,7], [2,5,8], [0,4,8], [2,4,6]]; const won = wins.some(c => tttBoard[c[0]] === sign && tttBoard[c[1]] === sign && tttBoard[c[2]] === sign);
+            if (won) { document.getElementById('ttt-status').innerText = sign === "X" ? "You Defeated Shirsendu!" : "Shirsendu Wins!"; tttActive = false; return true; }
+            if (!tttBoard.includes("")) { document.getElementById('ttt-status').innerText = "Stalemate Matrix Draw"; tttActive = false; return true; }
+            tttActive = true; if(sign === "O") document.getElementById('ttt-status').innerText = "Your Turn (X)"; return false;
+        }
+        function resetTTT() { tttBoard = ["", "", "", "", "", "", "", "", ""]; tttActive = true; document.getElementById('ttt-status').innerText = "Your Turn (You are X)"; document.querySelectorAll('.ttt-cell').forEach(c => c.innerText = ""); }
+
+        // SUDOKU CORE MATRIX
+        const completeSudokuSolution = [5,3,4,6,7,8,9,1,2,6,7,2,1,9,5,3,4,8,1,9,8,3,4,2,5,6,7,8,5,9,7,6,1,4,2,3,4,2,6,8,5,3,7,9,1,7,1,3,9,2,4,8,5,6,9,6,1,5,3,7,2,8,4,2,8,7,4,1,9,6,3,5,3,4,5,2,8,6,1,7,9];
+        const completeSudokuInitial = [5,3,0,0,7,0,0,0,0,6,0,0,1,9,5,0,0,0,0,9,8,0,0,0,0,6,0,8,0,0,0,6,0,0,0,3,4,0,0,8,0,3,0,0,1,7,0,0,0,2,0,0,0,6,0,6,0,0,0,0,2,8,0,0,0,0,4,1,9,0,0,5,0,0,0,0,8,0,0,7,9];
+        let s9x9Solution = []; let s9x9Initial = [];
+        function generateNewSudoku9x9() {
+            s9x9Solution = [...completeSudokuSolution]; s9x9Initial = [...completeSudokuInitial]; const wrapper = document.getElementById('sudoku-9x9-wrapper'); wrapper.innerHTML = "";
+            for (let i = 0; i < 81; i++) {
+                const row = Math.floor(i / 9); const col = i % 9; let b = "border border-neutral-200 "; if (col === 2 || col === 5) b += "border-r-2 border-r-neutral-400 "; if (row === 2 || row === 5) b += "border-b-2 border-b-neutral-400 ";
+                if (s9x9Initial[i] !== 0) { const cell = document.createElement('div'); cell.className = b + "bg-neutral-50 text-neutral-400 font-mono font-bold text-xs flex items-center justify-center select-none"; cell.innerText = s9x9Initial[i]; wrapper.appendChild(cell); }
+                else {
+                    const input = document.createElement('input'); input.type = 'text'; input.maxLength = 1; input.id = `s9x9-${i}`; input.className = b + "sudoku-9x9-cell bg-white text-center font-mono text-xs text-neutral-900 focus:outline-none focus:bg-amber-50";
+                    input.oninput = function() { this.value = this.value.replace(/[^1-9]/g, ''); if (parseInt(this.value) === s9x9Solution[i]) { this.style.color = '#16a34a'; this.style.backgroundColor = '#f0fdf4'; } else { this.style.color = '#0a0a0a'; this.style.backgroundColor = '#ffffff'; } }; wrapper.appendChild(input);
+                }
+            }
+            setupLensInteractions();
+        }
+        function checkSudoku9x9Solution() { let p = true; for (let i = 0; i < 81; i++) { if (s9x9Initial[i] === 0) { if (parseInt(document.getElementById(`s9x9-${i}`).value) !== s9x9Solution[i]) p = false; } } alert(p ? "Grid complete and accurate!" : "Incorrect fields remain."); }
+
+        // INTERACTIVE SNAKE ENGINE
+        const canvas = document.getElementById('snakeCanvas'); const ctx = canvas.getContext('2d');
+        const headAvatarImage = new Image(); 
+        
+        headAvatarImage.src = 'https://res.cloudinary.com/dbwbncxmh/image/upload/v1779782208/unnamed.png'; 
+        let isLocalAvatarLoaded = false; headAvatarImage.onload = function() { isLocalAvatarLoaded = true; };
+        
+        let snakeArr = []; let snakeDirection = "RIGHT"; let targetFood = {}; let scoreTally = 0; let snakeGameIntervalLoop = null;
+        const gridBoxUnitSize = 40; 
+
+        function prepareSnakeBoard() {
+            stopSnakeGameLoop();
+            snakeArr = [{ x: 4 * gridBoxUnitSize, y: 5 * gridBoxUnitSize }, { x: 3 * gridBoxUnitSize, y: 5 * gridBoxUnitSize }, { x: 2 * gridBoxUnitSize, y: 5 * gridBoxUnitSize }];
+            snakeDirection = "RIGHT"; scoreTally = 0; document.getElementById('snake-score-display').innerText = scoreTally;
+            ctx.clearRect(0, 0, canvas.width, canvas.height); ctx.fillStyle = "rgba(217, 119, 6, 0.4)";
+            snakeArr.forEach(cell => { ctx.beginPath(); ctx.arc(cell.x + gridBoxUnitSize / 2, cell.y + gridBoxUnitSize / 2, gridBoxUnitSize / 2.5, 0, 2 * Math.PI); ctx.fill(); });
+            document.getElementById('snake-start-overlay').style.opacity = "1"; document.getElementById('snake-start-overlay').classList.remove('pointer-events-none');
+            setupLensInteractions();
+        }
+
+        function startSnakeActiveLoop() {
+            if(document.activeElement) document.activeElement.blur();
+            canvas.focus();
+            
+            document.getElementById('snake-start-overlay').style.opacity = "0"; document.getElementById('snake-start-overlay').classList.add('pointer-events-none');
+            spawnTargetFood(); snakeGameIntervalLoop = setInterval(renderSnakeGameTickFrame, 160);
+        }
+
+        function spawnTargetFood() {
+            targetFood = { x: Math.floor(Math.random() * (canvas.width / gridBoxUnitSize)) * gridBoxUnitSize, y: Math.floor(Math.random() * (canvas.height / gridBoxUnitSize)) * gridBoxUnitSize };
+            if (snakeArr.some(cell => cell.x === targetFood.x && cell.y === targetFood.y)) { spawnTargetFood(); }
+        }
+
+        function renderSnakeGameTickFrame() {
+            let newHeadX = snakeArr[0].x; let newHeadY = snakeArr[0].y;
+            if (snakeDirection === "LEFT") newHeadX -= gridBoxUnitSize; if (snakeDirection === "RIGHT") newHeadX += gridBoxUnitSize; if (snakeDirection === "UP") newHeadY -= gridBoxUnitSize; if (snakeDirection === "DOWN") newHeadY += gridBoxUnitSize;
+            if (newHeadX < 0 || newHeadX >= canvas.width || newHeadY < 0 || newHeadY >= canvas.height || checkTailSelfCollision(newHeadX, newHeadY)) {
+                stopSnakeGameLoop(); document.getElementById('snake-score-display').innerText = `${scoreTally} (Game Over)`; return;
+            }
+            const freshHeadNode = { x: newHeadX, y: newHeadY };
+            if (newHeadX === targetFood.x && newHeadY === targetFood.y) { scoreTally += 10; document.getElementById('snake-score-display').innerText = scoreTally; spawnTargetFood(); } else { snakeArr.pop(); }
+            snakeArr.unshift(freshHeadNode); ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = "#d97706"; ctx.beginPath(); ctx.arc(targetFood.x + gridBoxUnitSize / 2, targetFood.y + gridBoxUnitSize / 2, gridBoxUnitSize / 3, 0, 2 * Math.PI); ctx.fill();
+            snakeArr.forEach((cell, idx) => {
+                if (idx === 0) {
+                    if (isLocalAvatarLoaded) { ctx.save(); ctx.beginPath(); ctx.arc(cell.x + gridBoxUnitSize / 2, cell.y + gridBoxUnitSize / 2, gridBoxUnitSize / 2, 0, 2 * Math.PI); ctx.clip(); ctx.drawImage(headAvatarImage, cell.x, cell.y, gridBoxUnitSize, gridBoxUnitSize); ctx.restore(); }
+                    else { ctx.fillStyle = "#d97706"; ctx.beginPath(); ctx.arc(cell.x + gridBoxUnitSize / 2, cell.y + gridBoxUnitSize / 2, gridBoxUnitSize / 2, 0, 2 * Math.PI); ctx.fill(); }
+                } else { ctx.fillStyle = "rgba(217, 119, 6, 0.35)"; ctx.strokeStyle = "#ffffff"; ctx.beginPath(); ctx.arc(cell.x + gridBoxUnitSize / 2, cell.y + gridBoxUnitSize / 2, gridBoxUnitSize / 2.6, 0, 2 * Math.PI); ctx.fill(); ctx.stroke(); }
+            });
+        }
+        function checkTailSelfCollision(x, y) { return snakeArr.some((cell, idx) => idx > 0 && cell.x === x && cell.y === y); }
+        function stopSnakeGameLoop() { if (snakeGameIntervalLoop) { clearInterval(snakeGameIntervalLoop); snakeGameIntervalLoop = null; } }
+
+        window.addEventListener("keydown", (e) => {
+            if (document.getElementById('games-overlay').classList.contains('hidden') || document.getElementById('game-snake-viewport').classList.contains('hidden')) return;
+            if(["ArrowLeft","ArrowUp","ArrowRight","ArrowDown"].includes(e.key)) { e.preventDefault(); }
+            if (e.key === "ArrowLeft" && snakeDirection !== "RIGHT") snakeDirection = "LEFT";
+            if (e.key === "ArrowUp" && snakeDirection !== "DOWN") snakeDirection = "UP";
+            if (e.key === "ArrowRight" && snakeDirection !== "LEFT") snakeDirection = "RIGHT";
+            if (e.key === "ArrowDown" && snakeDirection !== "UP") snakeDirection = "DOWN";
+        });
+
+        // AUDIO STABILIZERS
+        const audioNode = document.getElementById('bg-audio');
+        const musicDrawer = document.getElementById('music-drawer');
+        const floatingControllerNode = document.getElementById('floating-controller');
+        const persistentStatusLabel = document.getElementById('persistent-track-status');
+        const liveWaveDot = document.getElementById('sound-wave-dot');
+        const iconPlay = document.getElementById('p-play');
+        const iconPause = document.getElementById('p-pause');
+        let activeTrackId = null;
+
+        function toggleMusicDrawer(open) {
+            if(open) {
+                musicDrawer.classList.remove('translate-x-full');
+                document.body.style.overflow = 'hidden';
+            } else {
+                musicDrawer.classList.add('translate-x-full');
+                document.body.style.overflow = '';
+            }
+        }
+
+        function assemblePlaylistUI() {
+            const listWrapper = document.getElementById('playlist-container'); if(!listWrapper) return;
+            listWrapper.innerHTML = "";
+            myPlaylist.forEach(track => {
+                const rowItem = document.createElement('button'); rowItem.id = `track-node-${track.id}`;
+                rowItem.className = 'w-full text-left font-mono text-xs text-neutral-400 bg-neutral-900/30 hover:bg-neutral-900 border border-neutral-900/60 px-4 py-3 rounded smooth-glow flex justify-between items-center cursor-pointer group';
+                rowItem.innerHTML = `<span class="truncate group-hover:text-white smooth-glow">${track.title}</span><span id="active-dot-${track.id}" class="text-[9px] uppercase tracking-widest text-amber-400 font-bold hidden">Playing</span>`;
+                rowItem.onclick = () => runAudioSourceTrack(track.id); listWrapper.appendChild(rowItem);
+            });
+            setupLensInteractions();
+        }
+
+        function runAudioSourceTrack(id) {
+            const track = myPlaylist.find(t => t.id === id); if(!track) return;
+            myPlaylist.forEach(t => { document.getElementById(`active-dot-${t.id}`).classList.add('hidden'); document.getElementById(`track-node-${t.id}`).classList.remove('border-amber-400/30', 'bg-neutral-900/80'); });
+            activeTrackId = id; persistentStatusLabel.innerText = "[ LOADING FILTER ]"; floatingControllerNode.classList.remove('hidden');
+            audioNode.src = track.source; audioNode.load();
+            let playPromise = audioNode.play();
+            if (playPromise !== undefined) {
+                playPromise.then(() => {
+                    document.getElementById(`active-dot-${id}`).classList.remove('hidden'); document.getElementById(`active-dot-${id}`).innerText = "Playing"; document.getElementById(`track-node-${id}`).classList.add('border-amber-400/30', 'bg-neutral-900/80');
+                    persistentStatusLabel.innerText = track.title; liveWaveDot.classList.remove('hidden'); iconPlay.classList.add('hidden'); iconPause.classList.remove('hidden');
+                }).catch(error => { persistentStatusLabel.innerText = "Stream Delayed"; });
+            }
+        }
+
+        function toggleAudioPlayback() {
+            if (activeTrackId === null) return;
+            if (audioNode.paused) { audioNode.play(); iconPlay.classList.add('hidden'); iconPause.classList.remove('hidden'); liveWaveDot.classList.remove('hidden'); }
+            else { audioNode.pause(); iconPlay.classList.remove('hidden'); iconPause.classList.add('hidden'); liveWaveDot.classList.add('hidden'); }
+        }
+
+        // ─── SPECIAL TAB LOGIC ENGINE ───
+        const MILESTONE_START_DATE = new Date(2024, 11, 2, 0, 0, 0);
+        let timerIntervalToken = null;
+
+        function validateVaultAccess() {
+            const passInput = document.getElementById('vaultPass');
+            const errorHint = document.getElementById('errorHint');
+            const vaultGate = document.getElementById('vaultGate');
+            const welcomeOverlay = document.getElementById('welcomeOverlay');
+            const timerHeart = document.getElementById('timerHeart');
+            const vaultContent = document.getElementById('vaultContent');
+
+            if (passInput.value === "05042001") {
+                errorHint.style.opacity = "0";
+                vaultGate.style.opacity = "0";
+                
+                setTimeout(() => {
+                    vaultGate.style.visibility = "hidden";
+                    welcomeOverlay.style.visibility = "visible";
+                    welcomeOverlay.style.opacity = "1";
+                }, 800);
+
+                setTimeout(() => {
+                    welcomeOverlay.style.opacity = "0";
+                    setTimeout(() => {
+                        welcomeOverlay.style.visibility = "hidden";
+                        startHeartLiveTimer();
+                        timerHeart.classList.add('center-stage');
+                    }, 800);
+                }, 3800);
+
+                setTimeout(() => {
+                    timerHeart.classList.remove('center-stage');
+                    timerHeart.classList.add('corner-docked');
+
+                    setTimeout(() => {
+                        vaultContent.style.visibility = "visible";
+                        vaultContent.style.opacity = "1";
+                        triggerCardStaggerCascade();
+                    }, 1200); 
+                }, 8600); 
+            } else {
+                errorHint.style.opacity = "1";
+                passInput.style.borderColor = "#ef4444";
+                passInput.oninput = () => {
+                    errorHint.style.opacity = "0";
+                    passInput.style.borderColor = "rgba(255, 255, 255, 0.08)";
+                };
+            }
+        }
+
+        function startHeartLiveTimer() {
+            if (timerIntervalToken !== null) return;
+
+            function updateTimeDigits() {
+                const now = new Date();
+                const totalDifferenceMs = now - MILESTONE_START_DATE;
+
+                if (totalDifferenceMs < 0) {
+                    document.getElementById('countDays').textContent = "00";
+                    document.getElementById('countHours').textContent = "00";
+                    document.getElementById('countMins').textContent = "00";
+                    document.getElementById('countSecs').textContent = "00";
+                    return;
+                }
+
+                const totalSeconds = Math.floor(totalDifferenceMs / 1000);
+                const totalMinutes = Math.floor(totalSeconds / 60);
+                const totalHours = Math.floor(totalMinutes / 60);
+                
+                const finalDaysCalculated = Math.floor(totalHours / 24);
+                const finalHoursCalculated = totalHours % 24;
+                const finalMinutesCalculated = totalMinutes % 60;
+                const finalSecondsCalculated = totalSeconds % 60;
+
+                document.getElementById('countDays').textContent = String(finalDaysCalculated).padStart(2, '0');
+                document.getElementById('countHours').textContent = String(finalHoursCalculated).padStart(2, '0');
+                document.getElementById('countMins').textContent = String(finalMinutesCalculated).padStart(2, '0');
+                document.getElementById('countSecs').textContent = String(finalSecondsCalculated).padStart(2, '0');
+            }
+
+            updateTimeDigits();
+            timerIntervalToken = setInterval(updateTimeDigits, 1000);
+        }
+
+        function triggerCardStaggerCascade() {
+            const photoCards = document.querySelectorAll('.vault-photo-card');
+            photoCards.forEach((card, index) => {
+                setTimeout(() => {
+                    card.classList.add('stagger-entrance');
+                }, index * 120); 
+            });
+        }
+
+        document.getElementById('vaultPass').addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') validateVaultAccess();
+        });
+
+        // REBUILT POINTER ENGINE ANIMATIONS
+        const lens = document.getElementById('custom-lens');
+        document.addEventListener('mousemove', (e) => {
+            lens.style.left = `${e.clientX}px`;
+            lens.style.top = `${e.clientY}px`;
+        });
+
+        function setupLensInteractions() {
+            document.querySelectorAll('.img-trigger, button, a, .ttt-cell, .sudoku-9x9-cell, .action-btn, .hover-trigger-left, .hover-trigger-right, .unlock-btn, .pass-input-field, .vault-photo-card').forEach(el => {
+                el.addEventListener('mouseenter', () => {
+                    const isImg = el.classList.contains('img-trigger');
+                    // Retain coordinate centering while scaling
+                    lens.style.transform = 'translate(-50%, -50%) scale(2.5)';
+                    lens.style.backgroundColor = isImg ? '#fbbf24' : 'rgba(217, 119, 6, 0.15)';
+                    lens.style.borderColor = isImg ? '#fbbf24' : '#d97706';
+                    if(isImg) lens.innerText = 'view';
+                });
+                el.addEventListener('mouseleave', () => {
+                    // Retain coordinate centering when restoring
+                    lens.style.transform = 'translate(-50%, -50%) scale(1)';
+                    lens.style.backgroundColor = 'transparent';
+                    lens.style.borderColor = '#fbbf24';
+                    lens.innerText = '';
+                });
+            });
+        }
+
+        window.addEventListener('DOMContentLoaded', () => { buildGalleryGrid(); assemblePlaylistUI(); });
+        // ─── 10 MINUTE ENGAGEMENT TIMER ───
+        // Set to 600,000 for 10 minutes. (Tip: change to 5000 to test it in 5 seconds!)
+        setTimeout(() => {
+            const modal = document.getElementById('congrats-modal');
+            const box = document.getElementById('congrats-box');
+            
+            // Unhide the modal container
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            
+            // Tiny delay to allow CSS transitions to animate the fade-in
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+                box.classList.remove('scale-95');
+                box.classList.add('scale-100');
+            }, 50);
+            
+        }, 600000); 
+
+        function acceptCongrats() {
+            const modal = document.getElementById('congrats-modal');
+            const box = document.getElementById('congrats-box');
+            
+            // Trigger fade-out animations
+            modal.classList.add('opacity-0');
+            box.classList.remove('scale-100');
+            box.classList.add('scale-95');
+            
+            // Wait for fade-out to finish, then hide modal and fire HUGE confetti
+            setTimeout(() => {
+                modal.classList.remove('flex');
+                modal.classList.add('hidden');
+                
+                // 1. Launch the Pigeon
+                launchRealisticPigeons(window.innerWidth / 2, window.innerHeight / 2);
+
+                // 2. Fire 3 MASSIVE Confetti Bursts (Left, Center, Right)
+                for(let i = 0; i < 5; i++) { // Loop it 5 times for a thicker burst
+                    triggerConfettiBurst(window.innerWidth / 2, window.innerHeight / 2);     // Center
+                    triggerConfettiBurst(window.innerWidth / 4, window.innerHeight / 2);     // Left
+                    triggerConfettiBurst((window.innerWidth / 4) * 3, window.innerHeight / 2); // Right
+                }
+                
+            }, 500);
+        }
+        function dismissFooter() {
+    const footer = document.getElementById('end-of-site-footer');
+    footer.style.opacity = '0';
+    footer.style.visibility = 'hidden';
+    
+    // Optional: Completely remove it from the layout after the fade
+    setTimeout(() => {
+        footer.style.display = 'none';
+    }, 800);
+}
+// 1. Send the Like to Supabase
+// ─── BULLETPROOF GLOBAL LIKES ───
+// ─── BULLETPROOF GLOBAL LIKES ───
+async function triggerGlobalLike(event, photoId) {
+    if (event) event.stopPropagation();
+
+    let sessionKey = `user_likes_${photoId}`;
+    let currentSessionLikes = parseInt(sessionStorage.getItem(sessionKey) || "0");
+
+    if (currentSessionLikes >= 10) {
+        console.log("SESSION ACCREDITATION LIMIT REACHED");
+        alert("You've reached your appreciation limit of 10 likes for this session!");
+        return; 
+    }
+
+    sessionStorage.setItem(sessionKey, currentSessionLikes + 1);
+
+    const countElement = document.getElementById(`like-count-${photoId}`);
+    if (countElement) {
+        countElement.innerText = parseInt(countElement.innerText) + 1;
+    }
+
+    if (event && typeof triggerConfettiBurst === "function") {
+        triggerConfettiBurst(event.clientX, event.clientY);
+    }
+    if (event && typeof launchRealisticPigeons === "function") {
+        launchRealisticPigeons(event.clientX, event.clientY);
+    }
+
+    // Notice we use db.rpc here!
+    const { data, error } = await db.rpc('increment_likes', { target_photo_id: photoId.toString() });
+
+    if (error) {
+        console.error("Error updating global like, using fallback:", error);
+        safeFallbackLikeUpdate(photoId);
+    }
+}
+
+async function safeFallbackLikeUpdate(photoId) {
+    // Notice we use db.from here!
+    const { data: currentData } = await db
+        .from('photo_interactions')
+        .select('likes_count')
+        .eq('photo_id', photoId.toString())
+        .single();
+        
+    let trueCount = (currentData ? currentData.likes_count : 0) + 1;
+
+    // Notice we use db.from here!
+    await db
+        .from('photo_interactions')
+        .upsert({ photo_id: photoId.toString(), likes_count: trueCount }, { onConflict: 'photo_id' });
+}
+// ─── BULLETPROOF GLOBAL LOAD ───
+async function loadGlobalStats() {
+    console.log("Fetching global stats...");
+    // Notice we use db.from here!
+    const { data, error } = await db.from('photo_interactions').select('photo_id, likes_count');
+    
+    if (error) {
+        console.error("Failed to load stats:", error);
+        return;
+    }
+
+    if (data) {
+        data.forEach(item => {
+            const likeEl = document.getElementById(`like-count-${item.photo_id}`);
+            if (likeEl) {
+                likeEl.innerText = item.likes_count;
+            }
+        });
+    }
+
+    // Notice we use db.from here!
+    const { data: commentData, error: cError } = await db.from('comments').select('photo_id');
+    
+    if (commentData) {
+        let commentCounts = {};
+        commentData.forEach(c => {
+            commentCounts[c.photo_id] = (commentCounts[c.photo_id] || 0) + 1;
+        });
+
+        for (const [photo_id, count] of Object.entries(commentCounts)) {
+            const commEl = document.getElementById(`comment-count-${photo_id}`);
+            if (commEl) {
+                commEl.innerText = count;
+            }
+        }
+    }
+}
+
+// ─── FIXED GLOBAL COMMENTS LOADER ───
+async function loadAndOpenComments(photoId) {
+    activeCommentPhotoId = photoId;
+    const feed = document.getElementById('drawer-comments-feed'); 
+    feed.innerHTML = "<div class='text-center text-neutral-500 text-[10px] mt-4'>LOADING LOGS...</div>";
+    
+    toggleCommentsDrawer(true);
+
+    // Notice we use db.from here!
+    const { data, error } = await db
+        .from('comments')
+        .select('username, text, created_at')
+        .eq('photo_id', photoId)
+        .order('created_at', { ascending: false });
+
+    feed.innerHTML = ""; 
+
+    if (error || !data || data.length === 0) {
+        feed.innerHTML = `<div class="text-neutral-600 italic uppercase text-[10px] tracking-widest mt-4">No observations logged yet.</div>`;
+    } else {
+        data.forEach(c => {
+            const date = new Date(c.created_at).toLocaleDateString();
+            feed.innerHTML += `
+                <div class="border-b border-neutral-900 pb-3 mb-3">
+                    <div class="flex justify-between items-center mb-1">
+                        <span class="text-amber-500 font-bold">${(c.username || 'Anonymous').toUpperCase()} //</span>
+                        <span class="text-[8px] text-neutral-600">${date}</span>
+                    </div>
+                    <div class="text-neutral-400 pl-2 border-l-2 border-neutral-800">"${c.text}"</div>
+                </div>
+            `;
+        });
+    }
+}
+
+// Ensure the HTML finishes drawing before asking Supabase for numbers
+window.addEventListener('DOMContentLoaded', () => {
+    setTimeout(loadGlobalStats, 500); 
+});
+    </script>
+    <style>
+    /* 1. The dark, blurry background overlay */
+    .end-modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.85); 
+        backdrop-filter: blur(6px); 
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+        
+        /* Hidden by default */
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.6s ease, visibility 0.6s ease;
+    }
+
+    /* When this class is added, the modal fades in */
+    .end-modal-overlay.show-modal {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    /* 2. The box holding the image and text */
+    .end-modal-content {
+        background: var(--card-bg, #1a1a1a);
+        border: 1px solid var(--border-color, #333);
+        padding: 40px;
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        gap: 30px;
+        max-width: 700px;
+        width: 90%;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+        
+        /* Starts slightly lower, then slides up */
+        transform: translateY(30px);
+        transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* Slide up animation */
+    .end-modal-overlay.show-modal .end-modal-content {
+        transform: translateY(0);
+    }
+
+    /* 3. The Image */
+    .modal-img {
+        width: 250px;
+        height: 250px;
+        object-fit: cover;
+        border-radius: 50%;
+        border: 2px solid var(--text-accent, #ffcc00);
+    }
+
+    /* 4. The Text & Button */
+    .modal-message { 
+        color: var(--text-main, #ffffff); 
+        font-family: sans-serif; 
+    }
+    .modal-message h3 { 
+        margin: 0 0 10px 0; 
+        font-family: 'Syncopate', sans-serif; 
+        color: var(--text-accent, #ffcc00);
+    }
+    .eager-btn { 
+        margin-top: 15px; 
+        background: transparent; 
+        border: 1px solid var(--text-accent, #ffcc00);
+        color: var(--text-accent, #ffcc00); 
+        padding: 12px 20px; 
+        cursor: pointer;
+        border-radius: 6px;
+        font-family: 'Syncopate', sans-serif;
+        font-size: 0.8rem;
+        transition: all 0.3s;
+    }
+    .eager-btn:hover {
+        background: var(--text-accent, #ffcc00);
+        color: var(--bg-color, #000000);
+    }
+
+    /* Stack them vertically on mobile */
+    @media (max-width: 600px) {
+        .end-modal-content {
+            flex-direction: column;
+            text-align: center;
+            padding: 30px 20px;
+            gap :40px;
+        }
+    }
+</style>
+
+<div id="end-of-site-modal" class="end-modal-overlay">
+    <div class="end-modal-content">
+        <img src="https://res.cloudinary.com/dbwbncxmh/image/upload/v1779745805/oops.jpg" alt="End of site" class="modal-img">
+        
+        <div class="modal-message">
+            <h3>oops!</h3>
+            <p>Looks like you have reached the end for now! There will be more uploads soon! Thanks for visiting and taking your time — Shirsendu</p>
+            <button class="eager-btn" onclick="dismissEndModal()">
+                eagerly waiting for new uploads!
+            </button>
+        </div>
+    </div>
+</div>
+
+<script>
+    let hasSeenEndModal = false;
+
+    window.addEventListener('scroll', () => {
+        // Check if we hit the bottom of the page
+        const scrolledToBottom = (window.innerHeight + window.scrollY) >= document.body.offsetHeight - 50;
+
+        if (scrolledToBottom && !hasSeenEndModal) {
+            document.getElementById('end-of-site-modal').classList.add('show-modal');
+            document.body.style.overflow = 'hidden'; // Locks the background scroll
+            hasSeenEndModal = true; 
+        }
+    });
+
+    function dismissEndModal() {
+        document.getElementById('end-of-site-modal').classList.remove('show-modal');
+        document.body.style.overflow = 'auto'; // Unlocks the background scroll
+    }
+</script>
+    
+</body>
+</html>
